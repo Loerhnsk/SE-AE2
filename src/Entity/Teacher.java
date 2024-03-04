@@ -53,7 +53,10 @@ public class Teacher implements Serializable {
 
     public boolean checkAssign(){return this.approve;}
     public void setAssign(){this.approve = true;}
-    public String getTrain(){if(this.train == null)return ""; return this.train;};
+    public String getTrain(){
+        if(this.train == null)return "";
+        return this.train;
+    }
     public void setTrain(String train){this.train = train;}
 
 

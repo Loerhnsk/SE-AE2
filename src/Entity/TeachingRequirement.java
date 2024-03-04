@@ -63,7 +63,10 @@ public class TeachingRequirement implements Serializable {
     public String getRequestStatus() {
         return requestStatus;
     }
-    public boolean checkPending(){if(this.requestStatus.equals("pending"))return true;return false;}
+    public boolean checkPending(){
+        if(this.requestStatus.equals("pending"))return true;
+        return false;
+    }
 
     public void setRequestStatus(String requestStatus) {
         this.requestStatus = requestStatus;

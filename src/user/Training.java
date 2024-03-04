@@ -14,7 +14,7 @@ public class Training {
 
     private static void outputTeacher(List<Teacher> list){
         for (Teacher te : list) {
-            if(!te.checkAssigned())System.out.println(te);
+            if(!te.checkAssign())System.out.println(te);
         }
     }
 
@@ -45,7 +45,7 @@ public class Training {
         }
         for(Teacher te:teacher){
             if(te.getId() == teacherID){
-                if(te.checkAssigned()){
+                if(te.checkAssign()){
                     System.out.println("Already Assigned");
                     return;
                 }else {
@@ -54,7 +54,7 @@ public class Training {
                         return;
                     }else{
                         te.setTrain(requirement.getRequirement());
-                        te.setAssigned();
+                        te.setAssign();
                         requirement.setRequestStatus("approved");
                         isChanged = true;
                     }
