@@ -82,7 +82,8 @@ public class TeachingRequirement implements Serializable {
     @Override
     public String toString() {
         return "TeachingRequirement{" +
-                "directorName='" + directorName + '\'' +
+                "className="+ className+'\''+
+                ",directorName='" + directorName + '\'' +
                 ", requestId=" + requestId +
                 ", requirement='" + requirement + '\'' +
                 ", teachingTime='" + teachingTime + '\'' +

@@ -1,53 +1,83 @@
 package Logic;
 
-import Entity.TeachingRequirement;
-
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import Entity.TeachingRequirement; // 确保引入了正确的TeachingRequirement类
 
 public class BasicCommands {
 
-
-
-    //输入一个教学需求的List和对应存储的json，将List里面的教学需求写入JSON中
-    public static void writeTeachingRequirementsToJsonFile(List<TeachingRequirement> teachingRequirements, String filePath) {
-        StringBuilder jsonBuilder = new StringBuilder();
-        jsonBuilder.append("[\n");
-        for (int i = 0; i < teachingRequirements.size(); i++) {
-            TeachingRequirement requirement = teachingRequirements.get(i);
-            jsonBuilder.append("  {\n");
-            jsonBuilder.append(String.format("    \"className\": \"%s\",\n", requirement.getClassName()));
-            jsonBuilder.append(String.format("    \"directorName\": \"%s\",\n", requirement.getDirectorName()));
-            jsonBuilder.append(String.format("    \"requestId\": %d,\n", requirement.getRequestId()));
-            jsonBuilder.append(String.format("    \"requirement\": \"%s\",\n", requirement.getRequirement()));
-            jsonBuilder.append(String.format("    \"teachingTime\": \"%s\",\n", requirement.getTeachingTime()));
-            jsonBuilder.append(String.format("    \"requestStatus\": \"%s\"\n", requirement.getRequestStatus()));
-            jsonBuilder.append("  }");
-            if (i < teachingRequirements.size() - 1) {
-                jsonBuilder.append(",");
-            }
-            jsonBuilder.append("\n");
+    // 输入一个教学需求的List，将它们全部写入到txt中
+    public static void writeTeachingRequirementsToTxtFile(List<TeachingRequirement> teachingRequirements,
+            String filePath) {
+        StringBuilder txtBuilder = new StringBuilder();
+        for (TeachingRequirement requirement : teachingRequirements) {
+            // 格式化字符串并追加到StringBuilder
+            txtBuilder.append(String.format("%s,%s,%d,%s,%s,%s\n",
+                    requirement.getClassName(),
+                    requirement.getDirectorName(),
+                    requirement.getRequestId(),
+                    requirement.getRequirement(),
+                    requirement.getTeachingTime(),
+                    requirement.getRequestStatus()));
         }
-        jsonBuilder.append("]");
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write(jsonBuilder.toString());
+        // 写入文件
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) { // false to overwrite the
+                                                                                            // file
+            writer.write(txtBuilder.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    // 读取txt，创建出对应的教学需求List
 
+    public static List<TeachingRequirement> readTeachingRequirementsFromTxtFile(String filePath) {
+        List<TeachingRequirement> teachingRequirements = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // 假设每行格式为: directorName,requestId,requirement,teachingTime,requestStatus
+                String[] parts = line.split(",");
+                if (parts.length >= 6) {
+                    String className = parts[0].trim();
+                    String directorName = parts[1].trim();
+                    int requestId = Integer.parseInt(parts[2].trim()); // 确保这是一个整数
+                    String requirement = parts[3].trim();
+                    String teachingTime = parts[4].trim();
+                    String requestStatus = parts[5].trim();
 
-    //这里是测试用的
-    // public static void main(String[] args) {
-    //     List<TeachingRequirement> teachingRequirements = List.of(
-    //         new TeachingRequirement("Jesus","John Weak", 1, "Mathematics", "semester 1", "pending")
-    //         // 确保TeachingRequirement类构造器和方法与此调用相匹配
-    //     );
-    //     String filePath = "src/conf/Teaching_Requirement.json";
-    //     writeTeachingRequirementsToJsonFile(teachingRequirements, filePath);
+                    // 创建TeachingRequirement对象并添加到列表中
+                    TeachingRequirement tr = new TeachingRequirement(className, directorName, requestId, requirement,
+                            teachingTime, requestStatus);
+                    teachingRequirements.add(tr);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            System.out.println("Error parsing requestId to integer.");
+        }
+        return teachingRequirements;
+    }
+
+    public static void main(String[] args) {
+        //List<TeachingRequirement> teachingRequirements = List.of(
+       //         new TeachingRequirement("Jesus", "John Doe", 1, "Mathematics", "semester 1", "pending"),
+       //         new TeachingRequirement("kyaru", "Jane Smith", 2, "English", "semester 2", "approved")
+        // 确保TeachingRequirement类构造器和方法与此调用相匹配
+      //  );
+        String filePath = "src\\conf\\Teaching_Requirement.txt";
+        // writeTeachingRequirementsToTxtFile(teachingRequirements, filePath);
+
+        List<TeachingRequirement> teachingRequirements1 = readTeachingRequirementsFromTxtFile(filePath);
+        for (TeachingRequirement tr : teachingRequirements1) {
+            System.out.println(tr);
+        }
     }
 }
