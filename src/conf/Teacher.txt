@@ -1,8 +1,0 @@
-Alice Johnson,1001,Java/Mathematics/,true,
-Bob Smith,1002,Python//,false,
-Eva Davis,1003,English//.true,
-David Miller,1004,Mathematics//,false,
-Grace Turner,1005,Java/Python/,true,
-Michael Anderson,1006,Mathematics/Physics/Chemistry,false,
-Olivia White,1007,chemistry//,true,
-Samuel Clark,1008,Physics/English/,true,

@@ -24,12 +24,6 @@ public class Training {
         }
     }
 
-    private  static String approve(String input){
-        String[] parts = input.split(",",-1);
-        parts[5] = "approved";
-        return String.join(",",parts);
-    }
-
     private static void Training(List<TeachingRequirement> request, List<Teacher> teacher, int requestID, int teacherID){
         TeachingRequirement requirement = null;
         boolean isChanged = false;
@@ -112,6 +106,8 @@ public class Training {
                 System.out.print("Enter request id and teacher id to match or Enter 'exit' to exit：");
                 String userInput = reader.readLine();
                 if (userInput.equals("exit")) {
+                    BasicCommands.writeTeachingRequirementsToTxtFile(teachingRequirements,requestfile);
+                    BasicCommands.writeTeacherToTxtFile(teacher,teacherfile);
                     break;
                 }
                 String[] Order = userInput.split(",");

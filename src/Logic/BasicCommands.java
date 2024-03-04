@@ -37,6 +37,33 @@ public class BasicCommands {
             e.printStackTrace();
         }
     }
+    public static void writeTeacherToTxtFile(List<Teacher> teacher,
+                                                          String filePath) {
+        StringBuilder txtBuilder = new StringBuilder();
+        for (Teacher t_e : teacher) {
+            // 格式化字符串并追加到StringBuilder
+            txtBuilder.append(String.format("%s,%d,",
+                    t_e.getName(),
+                    t_e.getId()));
+            List<String> skill = new ArrayList<>(t_e.getSkills());
+            for (String s : skill) {
+                if(s != null)txtBuilder.append(s);
+                txtBuilder.append("/");
+            }
+            txtBuilder.deleteCharAt(txtBuilder.length() - 1);
+            if(t_e.checkAssign())txtBuilder.append(",true,");
+            else txtBuilder.append(",false,");
+            txtBuilder.append(t_e.getTrain()).append("\n");
+        }
+
+        // 写入文件
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) { // false to overwrite the
+            // file
+            writer.write(txtBuilder.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     // 读取txt，创建出对应的教学需求List
 
@@ -94,6 +121,8 @@ public class BasicCommands {
         }
         return teacher;
     }
+
+
 
     public static void main(String[] args) {
         //List<TeachingRequirement> teachingRequirements = List.of(
