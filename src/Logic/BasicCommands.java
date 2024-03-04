@@ -174,6 +174,10 @@ public class BasicCommands {
             System.out.println("Teacher is already assigned to a task.");
             return;
         }
+        if (!selectedRequest.getRequestStatus().equals("pending")){
+            System.out.println("Request is already assigned.");
+            return;
+        }
         // 更新教学请求状态和教师分配状态
         selectedRequest.setRequestStatus("approved");
         selectedTeacher.setAssigned();
