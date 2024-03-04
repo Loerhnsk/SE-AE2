@@ -1,66 +1,92 @@
 package Entity;
+
 import java.io.Serializable;
 
 public class TeachingRequirement implements Serializable {
     private static final long serialVersionUID = 1L; // 为了确保序列化兼容
 
-    private Course course;//需求对应的课程
-    private int requiredNumberOfTeachers;//课程所需教师人数
-    private String timePeriod;//上课时间段
-    private int requirementID;//这个教学需求自己的ID
+    private String className;//对应的课程名称
+    private String directorName; // 教导主任名称
+    private int requestId; // 申请ID
+    private String requirement; // 需求内容
+    private String teachingTime; // 教学时间
+    private String requestStatus; // 申请状态
 
     // 构造器
-    public TeachingRequirement(Course course, int requiredNumberOfTeachers, String timePeriod) {
-        this.course = course;
-        this.requiredNumberOfTeachers = requiredNumberOfTeachers;
-        this.timePeriod = timePeriod;
-    }
-
-    // 课程的getter和setter
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    // 所需教师数量的getter和setter
-    public int getRequiredNumberOfTeachers() {
-        return requiredNumberOfTeachers;
-    }
-
-    public void setRequiredNumberOfTeachers(int requiredNumberOfTeachers) {
-        this.requiredNumberOfTeachers = requiredNumberOfTeachers;
-    }
-
-    // 时间段的getter和setter
-    public String getTimePeriod() {
-        return timePeriod;
-    }
-
-    public void setTimePeriod(String timePeriod) {
-        this.timePeriod = timePeriod;
+    public TeachingRequirement(String className, String directorName, int requestId, String requirement, String teachingTime, String requestStatus) {
+        this.className = className;
+        this.directorName = directorName;
+        this.requestId = requestId;
+        this.requirement = requirement;
+        this.teachingTime = teachingTime;
+        this.requestStatus = requestStatus;
     }
 
 
-    public int getID(){
-        return requirementID;
+    // directorName的getter和setter
+    public String getDirectorName() {
+        return directorName;
     }
 
-    public void setID(int Id){
-        this.requirementID = Id;
+    public void setDirectorName(String directorName) {
+        this.directorName = directorName;
+    }
+
+    // requestId的getter和setter
+    public int getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(int requestId) {
+        this.requestId = requestId;
+    }
+
+    // requirement的getter和setter
+    public String getRequirement() {
+        return requirement;
+    }
+
+    public void setRequirement(String requirement) {
+        this.requirement = requirement;
+    }
+
+    // teachingTime的getter和setter
+    public String getTeachingTime() {
+        return teachingTime;
+    }
+
+    public void setTeachingTime(String teachingTime) {
+        this.teachingTime = teachingTime;
+    }
+
+    // requestStatus的getter和setter
+    public String getRequestStatus() {
+        return requestStatus;
+    }
+
+    public void setRequestStatus(String requestStatus) {
+        this.requestStatus = requestStatus;
     }
 
 
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
 
     // 重写toString方法以便更容易地打印和查看TeachingRequirement对象的信息
     @Override
     public String toString() {
         return "TeachingRequirement{" +
-                "course=" + course +
-                ", requiredNumberOfTeachers=" + requiredNumberOfTeachers +
-                ", timePeriod='" + timePeriod + '\'' +
+                "directorName='" + directorName + '\'' +
+                ", requestId=" + requestId +
+                ", requirement='" + requirement + '\'' +
+                ", teachingTime='" + teachingTime + '\'' +
+                ", requestStatus='" + requestStatus + '\'' +
                 '}';
     }
 }
