@@ -1,24 +1,83 @@
 package Logic;
 
-import Entity.*;
-
-import java.time.LocalDateTime;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import Entity.TeachingRequirement; // 确保引入了正确的TeachingRequirement类
 
 public class BasicCommands {
 
-    // 提交教学需求到审批申请里面
-    public static void summitRequirement(LocalDateTime time, String comments, List<Approval> approvalList,TeachingRequirement requirement) {
-        Approval approval = new Approval(0, null, time, comments);// 这里把审批人设空，等到正式批审的时候再进行署名
-        approval.setrID(requirement.getID());//把审批的rID和对应的教学需求ID对应起来
-        approvalList.add(approval);//把申请添加到审批列表中
+    // 输入一个教学需求的List，将它们全部写入到txt中
+    public static void writeTeachingRequirementsToTxtFile(List<TeachingRequirement> teachingRequirements,
+                                                          String filePath) {
+        StringBuilder txtBuilder = new StringBuilder();
+        for (TeachingRequirement requirement : teachingRequirements) {
+            // 格式化字符串并追加到StringBuilder
+            txtBuilder.append(String.format("%s,%s,%d,%s,%s,%s\n",
+                    requirement.getClassName(),
+                    requirement.getDirectorName(),
+                    requirement.getRequestId(),
+                    requirement.getRequirement(),
+                    requirement.getTeachingTime(),
+                    requirement.getRequestStatus()));
+        }
+
+        // 写入文件
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) { // false to overwrite the
+            // file
+            writer.write(txtBuilder.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    //创建对应的教学需求
-    public static TeachingRequirement createRequirement(Course course, String time,int teacher){
-        TeachingRequirement requirement = new TeachingRequirement(course, teacher, time);
-        return requirement;
+    // 读取txt，创建出对应的教学需求List
+
+    public static List<TeachingRequirement> readTeachingRequirementsFromTxtFile(String filePath) {
+        List<TeachingRequirement> teachingRequirements = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // 假设每行格式为: directorName,requestId,requirement,teachingTime,requestStatus
+                String[] parts = line.split(",");
+                if (parts.length >= 6) {
+                    String className = parts[0].trim();
+                    String directorName = parts[1].trim();
+                    int requestId = Integer.parseInt(parts[2].trim()); // 确保这是一个整数
+                    String requirement = parts[3].trim();
+                    String teachingTime = parts[4].trim();
+                    String requestStatus = parts[5].trim();
+
+                    // 创建TeachingRequirement对象并添加到列表中
+                    TeachingRequirement tr = new TeachingRequirement(className, directorName, requestId, requirement,
+                            teachingTime, requestStatus);
+                    teachingRequirements.add(tr);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            System.out.println("Error parsing requestId to integer.");
+        }
+        return teachingRequirements;
     }
 
+    public static void main(String[] args) {
+        //List<TeachingRequirement> teachingRequirements = List.of(
+        //         new TeachingRequirement("Jesus", "John Doe", 1, "Mathematics", "semester 1", "pending"),
+        //         new TeachingRequirement("kyaru", "Jane Smith", 2, "English", "semester 2", "approved")
+        // 确保TeachingRequirement类构造器和方法与此调用相匹配
+        //  );
+        String filePath = "src\\conf\\Teaching_Requirement.txt";
+        // writeTeachingRequirementsToTxtFile(teachingRequirements, filePath);
 
+        List<TeachingRequirement> teachingRequirements1 = readTeachingRequirementsFromTxtFile(filePath);
+        for (TeachingRequirement tr : teachingRequirements1) {
+            System.out.println(tr);
+        }
+    }
 }
