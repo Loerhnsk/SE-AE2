@@ -41,14 +41,21 @@ public class Teacher implements Serializable {
     public void setSkills(List<String> skills) {
         this.skills = skills;
     }
+    public boolean checkSkill(String skill) {
+        for (String s : skills) {
+            if(s.equals(skill))return true;
+        }
+        return false;
+    }
     public void addSkill(String skill) {
         this.skills.add(skill);
     }
 
-    public boolean checkApprove(){return this.approve;}
-    public void setApprove(){this.approve = true;}
+    public boolean checkAssign(){return this.approve;}
+    public void setAssign(){this.approve = true;}
     public String getTrain(){return this.train;};
     public void setTrain(String train){this.train = train;}
+
 
 
     public String toString() {
