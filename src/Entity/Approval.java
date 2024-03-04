@@ -6,7 +6,8 @@ import java.time.LocalDateTime;
 public class Approval implements Serializable {
     private static final long serialVersionUID = 1L; // 为了确保序列化兼容
 
-    private int isApproved; // 审批状态，0为未处理，1为批准，2为否决
+
+    private int isApproved; // 审批状态，0为未处理，为批准，2为否决
     private String approver; // 审批人
     private LocalDateTime approvalTime; // 审批时间
     private String comments; // 审批意见

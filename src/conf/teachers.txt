@@ -1,0 +1,9 @@
+name,id,teachingSkills,assigned,trainingSkill
+Alice Johnson,1001,Java/Mathematics/,true,null
+Bob Smith,1002,Python//,false,null
+Eva Davis,1003,English//,true,null
+David Miller,1004,Mathematics//,false,null
+Grace Turner,1005,Java/Python/,true,null
+Michael Anderson,1006,Mathematics/Physics/Chemistry,false,null
+Olivia White,1007,Chemistry//,true,null
+Samuel Clark,1008,Physics/English/,true,null

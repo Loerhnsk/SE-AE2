@@ -16,7 +16,7 @@ public class BasicCommands {
 
     // 输入一个教学需求的List，将它们全部写入到txt中
     public static void writeTeachingRequirementsToTxtFile(List<TeachingRequirement> teachingRequirements,
-            String filePath) {
+                                                          String filePath) {
         StringBuilder txtBuilder = new StringBuilder();
         for (TeachingRequirement requirement : teachingRequirements) {
             // 格式化字符串并追加到StringBuilder
@@ -31,7 +31,7 @@ public class BasicCommands {
 
         // 写入文件
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) { // false to overwrite the
-                                                                                            // file
+            // file
             writer.write(txtBuilder.toString());
         } catch (IOException e) {
             e.printStackTrace();
@@ -97,10 +97,10 @@ public class BasicCommands {
 
     public static void main(String[] args) {
         //List<TeachingRequirement> teachingRequirements = List.of(
-       //         new TeachingRequirement("Jesus", "John Doe", 1, "Mathematics", "semester 1", "pending"),
-       //         new TeachingRequirement("kyaru", "Jane Smith", 2, "English", "semester 2", "approved")
+        //         new TeachingRequirement("Jesus", "John Doe", 1, "Mathematics", "semester 1", "pending"),
+        //         new TeachingRequirement("kyaru", "Jane Smith", 2, "English", "semester 2", "approved")
         // 确保TeachingRequirement类构造器和方法与此调用相匹配
-      //  );
+        //  );
         String filePath = "src\\conf\\Teaching_Requirement.txt";
         // writeTeachingRequirementsToTxtFile(teachingRequirements, filePath);
 
