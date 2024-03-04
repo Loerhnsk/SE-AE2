@@ -95,6 +95,95 @@ public class BasicCommands {
         return teacher;
     }
 
+    public static List<Teacher> readTeachersFromTxtFile(String filePath) {
+        List<Teacher> teachers = new ArrayList<>();
+        boolean skipHeader = true;  // 添加一个标志来跳过标题行
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // 跳过标题行
+                if (skipHeader) {
+                    skipHeader = false;
+                    continue;
+                }
+
+                // 处理实际数据
+                String[] parts = line.split(",");
+                if (parts.length >= 5) {
+                    String name = parts[0].trim();
+                    int id = Integer.parseInt(parts[1].trim());
+                    List<String> teachingSkills = Arrays.asList(parts[2].split("/"));
+                    boolean assigned = Boolean.parseBoolean(parts[3].trim());
+                    String trainingSkill = parts[4].trim();
+
+                    Teacher teacher = new Teacher(name, id, teachingSkills, assigned, trainingSkill);
+                    teachers.add(teacher);
+                }
+            }
+        } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return teachers;
+    }
+    public static void writeTeachersToTxtFile(List<Teacher> teachers, String filePath) {
+        StringBuilder txtBuilder = new StringBuilder();
+        for (Teacher teacher : teachers) {
+            // 格式化字符串并追加到StringBuilder
+            txtBuilder.append(String.format("%s,%d,%s,%s,%s\n",
+                    teacher.getName(),
+                    teacher.getId(),
+                    String.join("/", teacher.getSkills()),  // 将教学技能列表转为用 '/' 分隔的字符串
+                    teacher.checkAssigned(),
+                    teacher.getTrain()));
+        }
+
+        // 写入文件
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) { // false to overwrite the file
+            writer.write(txtBuilder.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void approveTeachingRequestAndAssignTeacher(List<TeachingRequirement> teachingRequirements,
+                                                              List<Teacher> teachers, int requestId, int teacherId) {
+        // 查找对应的教学请求和教师
+        TeachingRequirement selectedRequest = null;
+        Teacher selectedTeacher = null;
+
+        for (TeachingRequirement request : teachingRequirements) {
+            if (request.getRequestId() == requestId) {
+                selectedRequest = request;
+                break;
+            }
+        }
+
+        for (Teacher teacher : teachers) {
+            if (teacher.getId() == teacherId) {
+                selectedTeacher = teacher;
+                break;
+            }
+        }
+        // 检查是否找到了对应的教学请求和教师
+        if (selectedRequest == null || selectedTeacher == null) {
+            System.out.println("Teaching request or teacher not found.");
+            return;
+        }
+        // 检查教师是否已分配任务
+        if (selectedTeacher.checkAssigned()) {
+            System.out.println("Teacher is already assigned to a task.");
+            return;
+        }
+        // 更新教学请求状态和教师分配状态
+        selectedRequest.setRequestStatus("approved");
+        selectedTeacher.setAssigned();
+
+        // 将更新后的信息写回文件
+        writeTeachingRequirementsToTxtFile(teachingRequirements, "src\\conf\\Teaching_Requirement.txt");
+        writeTeachersToTxtFile(teachers, "src\\conf\\teacher.txt");
+
+        System.out.println("Teaching request approved, and teacher assigned.");
+    }
     public static void main(String[] args) {
         //List<TeachingRequirement> teachingRequirements = List.of(
         //         new TeachingRequirement("Jesus", "John Doe", 1, "Mathematics", "semester 1", "pending"),
