@@ -7,24 +7,26 @@ import java.util.List;
 public class Teacher implements Serializable {
     private static final long serialVersionUID = 1L; // 为了确保序列化兼容
     
-    private String id;
+    private int id;
     private String name;
     private List<String> skills;
-    private List<String> trainings;
+    private boolean approve;
+    private String train;
 
     // 构造器
-    public Teacher(String id, String name) {
+    public Teacher(String name, int id, List<String>skills, boolean approve, String train) {
         this.id = id;
         this.name = name;
-        this.skills = new ArrayList<>();
-        this.trainings = new ArrayList<>();
+        this.skills = new ArrayList<>(skills);
+        this.approve = approve;
+        this.train =train;
     }
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
     public String getName() {
@@ -42,22 +44,19 @@ public class Teacher implements Serializable {
     public void addSkill(String skill) {
         this.skills.add(skill);
     }
-    public List<String> getTrainings() {
-        return trainings;
-    }
-    public void setTrainings(List<String> trainings) {
-        this.trainings = trainings;
-    }
-    public void addTraining(String training) {
-        this.trainings.add(training);
-    }
+
+    public boolean checkApprove(){return this.approve;}
+    public void setApprove(){this.approve = true;}
+    public String getTrain(){return this.train;};
+    public void setTrain(String train){this.train = train;}
+
 
     public String toString() {
-        return "Teacher{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", skills=" + skills +
-                ", trainings=" + trainings +
-                '}';
+        String output = String.format("%-15s %-40s", "Id:" + id, "name:" + name);
+        output = output + "Skills: ";
+        for (String skill : skills) {
+            output = output + skill + "; ";
+        }
+        return output;
     }
 }

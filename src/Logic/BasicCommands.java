@@ -6,7 +6,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import Entity.Teacher;
 import Entity.TeachingRequirement; // 确保引入了正确的TeachingRequirement类
 
 public class BasicCommands {
@@ -64,6 +67,32 @@ public class BasicCommands {
             System.out.println("Error parsing requestId to integer.");
         }
         return teachingRequirements;
+    }
+    public static List<Teacher> readTeacherFromTxtFile(String filePath) {
+        List<Teacher> teacher = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // 假设每行格式为: directorName,requestId,requirement,teachingTime,requestStatus
+                String[] parts = line.split(",",-1);
+                if (parts.length >= 5) {
+                    String Name = parts[0].trim();
+                    int Id = Integer.parseInt(parts[1].trim()); // 确保这是一个整数
+                    String[] skills = parts[2].split("/");
+                    List<String> list = new ArrayList<>(Arrays.asList(skills));
+                    boolean Approve = Boolean.parseBoolean(parts[3].trim());
+                    String Train = parts[4].trim();
+                    // 创建TeachingRequirement对象并添加到列表中
+                    Teacher te = new Teacher(Name,Id,list,Approve,Train);
+                    teacher.add(te);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            System.out.println("Error parsing requestId to integer.");
+        }
+        return teacher;
     }
 
     public static void main(String[] args) {

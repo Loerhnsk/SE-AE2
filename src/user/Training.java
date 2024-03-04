@@ -1,5 +1,12 @@
+package user;
+
 import java.io.*;
-import java.util.Objects;
+import java.util.List;
+
+import Entity.Teacher;
+import Entity.TeachingRequirement;
+
+import Logic.BasicCommands;
 
 public class Training {
     private static boolean checkID(String line, String ID){
@@ -221,6 +228,14 @@ public class Training {
     public static void main(String[] args) {
         File requestfile = new File("src\\conf\\Teaching_Requirement.txt");
         File teacherfile = new File("src\\conf\\teacher.txt");
+        List<TeachingRequirement> teachingRequirements1 = BasicCommands.readTeachingRequirementsFromTxtFile("src\\conf\\Teaching_Requirement.txt");
+        List<Teacher> teacher = BasicCommands.readTeacherFromTxtFile("src\\conf\\teacher.txt");
+        for (TeachingRequirement tr : teachingRequirements1) {
+            System.out.println(tr);
+        }
+        for (Teacher te : teacher) {
+            System.out.println(te);
+        }
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
             try {

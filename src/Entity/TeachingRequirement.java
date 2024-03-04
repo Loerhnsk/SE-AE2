@@ -81,13 +81,14 @@ public class TeachingRequirement implements Serializable {
     // 重写toString方法以便更容易地打印和查看TeachingRequirement对象的信息
     @Override
     public String toString() {
-        return "TeachingRequirement{" +
-                "className="+ className+'\''+
-                ",directorName='" + directorName + '\'' +
-                ", requestId=" + requestId +
-                ", requirement='" + requirement + '\'' +
-                ", teachingTime='" + teachingTime + '\'' +
-                ", requestStatus='" + requestStatus + '\'' +
-                '}';
+
+        return String.format("%-15s %-40s %-40s %-40s %-30s",
+                "requestId:" + requestId,
+                "className:" + className,
+                "directorName:" + directorName,
+                "requirement:" + requirement,
+                "teachingTime:" + requestStatus);
+
+
     }
 }
