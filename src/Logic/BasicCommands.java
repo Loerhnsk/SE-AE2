@@ -41,7 +41,7 @@ public class BasicCommands {
                                                           String filePath) {
         StringBuilder txtBuilder = new StringBuilder();
         for (Teacher t_e : teacher) {
-            // 格式化字符串并追加到StringBuilder
+            //Add the information to the textBuilder
             txtBuilder.append(String.format("%s,%d,",
                     t_e.getName(),
                     t_e.getId()));
@@ -56,7 +56,7 @@ public class BasicCommands {
             txtBuilder.append(t_e.getTrain()).append("\n");
         }
 
-        // 写入文件
+        // write to the file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) { // false to overwrite the
             // file
             writer.write(txtBuilder.toString());
@@ -95,12 +95,14 @@ public class BasicCommands {
         }
         return teachingRequirements;
     }
+
+    //List from File
     public static List<Teacher> readTeacherFromTxtFile(String filePath) {
         List<Teacher> teacher = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                // 假设每行格式为: directorName,requestId,requirement,teachingTime,requestStatus
+                //Name,Id,skill1/skill2/..,A,Assign,Training skill
                 String[] parts = line.split(",",-1);
                 if (parts.length >= 5) {
                     String Name = parts[0].trim();
@@ -109,7 +111,7 @@ public class BasicCommands {
                     List<String> list = new ArrayList<>(Arrays.asList(skills));
                     boolean Approve = Boolean.parseBoolean(parts[3].trim());
                     String Train = parts[4].trim();
-                    // 创建TeachingRequirement对象并添加到列表中
+                    // Add Teacher to the list
                     Teacher te = new Teacher(Name,Id,list,Approve,Train);
                     teacher.add(te);
                 }
@@ -122,6 +124,13 @@ public class BasicCommands {
         return teacher;
     }
 
+    //write a line
+    public static void writeline(){
+
+        String output = "";
+        for(int i=0; i<200 ;i++) output +="-";
+        System.out.println(output);
+    }
 
 
     public static void main(String[] args) {

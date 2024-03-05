@@ -9,21 +9,24 @@ import Entity.TeachingRequirement;
 import Logic.BasicCommands;
 
 public class Training {
-    private static final String requestfile ="src\\conf\\Teaching_Requirement.txt";
-    private static final String teacherfile ="src\\conf\\teacher.txt";
+    private static final String requestfile ="src\\conf\\Teaching_Requirement.txt"; //The fine name of requirement
+    private static final String teacherfile ="src\\conf\\Teacher.txt";  //The file name of the teacher
 
+    //output all of available teacher
     private static void outputTeacher(List<Teacher> list){
         for (Teacher te : list) {
             if(!te.checkAssign())System.out.println(te);
         }
     }
 
+    //output all of the pending requirement
     private static void outputrequirement(List<TeachingRequirement> list){
         for (TeachingRequirement tr : list) {
             if(tr.checkPending())System.out.println(tr);
         }
     }
 
+    //Training a teacher(teacher ID) for the skill of request(requestID)
     private static void Training(List<TeachingRequirement> request, List<Teacher> teacher, int requestID, int teacherID){
         TeachingRequirement requirement = null;
         boolean isChanged = false;
@@ -68,6 +71,8 @@ public class Training {
         System.out.println("Trained");
 
     }
+
+    //Order of rejecting a requirement with ID
     private static void Rejecting(List<TeachingRequirement> list, int ID){
             boolean isPending = false;
             boolean isChange = false;
@@ -88,32 +93,36 @@ public class Training {
     }
 
     public static void main(String[] args) {
+        //Read from file
         List<TeachingRequirement> teachingRequirements = BasicCommands.readTeachingRequirementsFromTxtFile(requestfile);
         List<Teacher> teacher = BasicCommands.readTeacherFromTxtFile(teacherfile);
-        for (TeachingRequirement tr : teachingRequirements) {
-            System.out.println(tr);
-        }
-        for (Teacher te : teacher) {
-            System.out.println(te);
-        }
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        //Main loop
         while (true) {
             try {
+                //Output current state
                 System.out.println("Pending request:");
                 outputrequirement(teachingRequirements);
+                BasicCommands.writeline();
                 System.out.println("Available Teacher");
                 outputTeacher(teacher);
+                BasicCommands.writeline();
                 System.out.print("Enter request id and teacher id to match or Enter 'exit' to exit：");
+                //Read User Input from terminal
                 String userInput = reader.readLine();
+                //Exit command
                 if (userInput.equals("exit")) {
+                    //write current data to the file
                     BasicCommands.writeTeachingRequirementsToTxtFile(teachingRequirements,requestfile);
                     BasicCommands.writeTeacherToTxtFile(teacher,teacherfile);
                     break;
                 }
+                //Input Order checking
                 String[] Order = userInput.split(",");
                 if(Order.length != 2) System.out.println("Wrong Order");
                 else if(Order[0].equals("reject"))Rejecting(teachingRequirements,Integer.parseInt(Order[1]));
                 else Training(teachingRequirements,teacher,Integer.parseInt(Order[0]),Integer.parseInt(Order[1]));
+                BasicCommands.writeline();
             } catch (IOException e) {
                 e.printStackTrace();
             }

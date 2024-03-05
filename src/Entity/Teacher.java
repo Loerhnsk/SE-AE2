@@ -10,15 +10,15 @@ public class Teacher implements Serializable {
     private int id;
     private String name;
     private List<String> skills;
-    private boolean approve;
+    private boolean assign;
     private String train;
 
     // 构造器
-    public Teacher(String name, int id, List<String>skills, boolean approve, String train) {
+    public Teacher(String name, int id, List<String>skills, boolean assign, String train) {
         this.id = id;
         this.name = name;
         this.skills = new ArrayList<>(skills);
-        this.approve = approve;
+        this.assign = assign;
         this.train =train;
     }
 
@@ -51,8 +51,8 @@ public class Teacher implements Serializable {
         this.skills.add(skill);
     }
 
-    public boolean checkAssign(){return this.approve;}
-    public void setAssign(){this.approve = true;}
+    public boolean checkAssign(){return this.assign;}
+    public void setAssign(){this.assign = true;}
     public String getTrain(){
         if(this.train == null)return "";
         return this.train;
