@@ -11,6 +11,7 @@ public class Teacher implements Serializable {
     private String name;
     private List<String> skills;
     private boolean assign;
+    private String  assigned;
     private String train;
 
     // 构造器
@@ -58,6 +59,12 @@ public class Teacher implements Serializable {
         return this.train;
     }
     public void setTrain(String train){this.train = train;}
+    public void setAssigned(String assigned){this.assigned = assigned;}
+    public String getAssigned(){
+        if (this.assigned == null)
+            return "";
+        return this.assigned;
+    }
 
 
 

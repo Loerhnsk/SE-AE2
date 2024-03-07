@@ -19,6 +19,10 @@ public class maincommand {
                 if (userInput.equals("Training")) {
                     Training.training();
                 }
+                if(userInput.equals("Director"))
+                {
+                    Director.director();
+                }
             }catch (IOException e) {
                 e.printStackTrace();
             }
