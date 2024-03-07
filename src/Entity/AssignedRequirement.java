@@ -8,6 +8,9 @@ public class AssignedRequirement {
     private String className;//对应的课程名称
     private int TId;
     private String tname;//
+    public AssignedRequirement(){
+
+    }
     public String getDirectorName() {
         return directorName;
     }

@@ -181,7 +181,7 @@ public class BasicCommands {
     public static void Approvalrequest(List<TeachingRequirement> request, List<Teacher> teacher, List<AssignedRequirement> assignedRequirements,
                                        int requestID, int teacherID){
         TeachingRequirement requirement = null;
-        AssignedRequirement assignedRequirement = null;
+        AssignedRequirement assignedRequirement = new AssignedRequirement();
         boolean isChanged = false;
         boolean Notfound = true;
         for(TeachingRequirement tr:request){
