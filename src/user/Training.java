@@ -9,10 +9,17 @@ import Entity.TeachingRequirement;
 import Logic.BasicCommands;
 
 public class Training {
-    private static final String requestfile ="src\\conf\\Teaching_Requirement.txt"; //The fine name of requirement
-    private static final String teacherfile ="src\\conf\\Teacher.txt";  //The file name of the teacher
+    private static String requestfile ="src\\conf\\Teaching_Requirement.txt"; //The fine name of requirement
+    private static String teacherfile ="src\\conf\\Teacher.txt";  //The file name of the teacher
 
+    private static List<TeachingRequirement> teachingRequirements = BasicCommands.readTeachingRequirementsFromTxtFile(requestfile);
+    private static List<Teacher> teacher = BasicCommands.readTeacherFromTxtFile(teacherfile);
     //output all of available teacher
+
+  //  public Training(String requestfile, String teacherfile){
+   //     teachingRequirements = BasicCommands.readTeachingRequirementsFromTxtFile(requestfile);
+   //     teacher = BasicCommands.readTeacherFromTxtFile(teacherfile);
+   // }
     private static void outputTeacher(List<Teacher> list){
         for (Teacher te : list) {
             if(!te.checkAssign())System.out.println(te);
@@ -27,7 +34,7 @@ public class Training {
     }
 
     //Training a teacher(teacher ID) for the skill of request(requestID)
-    private static void Training(List<TeachingRequirement> request, List<Teacher> teacher, int requestID, int teacherID){
+    private static void Train(List<TeachingRequirement> request, List<Teacher> teacher, int requestID, int teacherID){
         TeachingRequirement requirement = null;
         boolean isChanged = false;
         boolean Notfound = true;
@@ -92,10 +99,9 @@ public class Training {
 
     }
 
-    public static void main(String[] args) {
+    public static void training() {
         //Read from file
-        List<TeachingRequirement> teachingRequirements = BasicCommands.readTeachingRequirementsFromTxtFile(requestfile);
-        List<Teacher> teacher = BasicCommands.readTeacherFromTxtFile(teacherfile);
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         //Main loop
         while (true) {
@@ -121,7 +127,7 @@ public class Training {
                 String[] Order = userInput.split(",");
                 if(Order.length != 2) System.out.println("Wrong Order");
                 else if(Order[0].equals("reject"))Rejecting(teachingRequirements,Integer.parseInt(Order[1]));
-                else Training(teachingRequirements,teacher,Integer.parseInt(Order[0]),Integer.parseInt(Order[1]));
+                else Train(teachingRequirements,teacher,Integer.parseInt(Order[0]),Integer.parseInt(Order[1]));
                 BasicCommands.writeline();
             } catch (IOException e) {
                 e.printStackTrace();

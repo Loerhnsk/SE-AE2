@@ -1,0 +1,100 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class Approval {
+  + Approval(int, String, LocalDateTime, String):
+  - comments: String
+  - approvalTime: LocalDateTime
+  - ID: int
+  - approver: String
+  + isApproved(): int
+  + toString(): String
+   approvalTime: LocalDateTime
+   rID: int
+   comments: String
+   approved: int
+   approver: String
+   ID: int
+}
+class BasicCommands {
+  + BasicCommands():
+  + readTeachingRequirementsFromTxtFile(String): List<TeachingRequirement>
+  + writeTeacherToTxtFile(List<Teacher>, String): void
+  + readTeacherFromTxtFile(String): List<Teacher>
+  + writeline(): void
+  + writeTeachingRequirementsToTxtFile(List<TeachingRequirement>, String): void
+  + main(String[]): void
+}
+class Course {
+  + Course(String, String):
+  - courseId: String
+  - assignedTeachers: List<Teacher>
+  - requiredSkills: List<String>
+  - courseName: String
+  + toString(): String
+  + addRequiredSkill(String): void
+  + assignTeacher(Teacher): void
+   requiredSkills: List<String>
+   courseId: String
+   courseName: String
+   assignedTeachers: List<Teacher>
+}
+class Teacher {
+  + Teacher(String, int, List<String>, boolean, String):
+  - train: String
+  - id: int
+  - name: String
+  - skills: List<String>
+  + setAssign(): void
+  + toString(): String
+  + addSkill(String): void
+  + checkSkill(String): boolean
+  + checkAssign(): boolean
+   name: String
+   train: String
+   skills: List<String>
+   id: int
+}
+class TeachingRequirement {
+  + TeachingRequirement(String, String, int, String, String, String):
+  - className: String
+  - requirement: String
+  - requestId: int
+  - directorName: String
+  - teachingTime: String
+  - requestStatus: String
+  + toString(): String
+  + checkPending(): boolean
+   directorName: String
+   className: String
+   requirement: String
+   requestStatus: String
+   requestId: int
+   teachingTime: String
+}
+class Training {
+  + Training():
+  + training(): void
+  - Train(List<TeachingRequirement>, List<Teacher>, int, int): void
+  - Rejecting(List<TeachingRequirement>, int): void
+  - outputrequirement(List<TeachingRequirement>): void
+  - outputTeacher(List<Teacher>): void
+}
+class maincommand {
+  + maincommand():
+  + main(String[]): void
+}
+
+BasicCommands        -[#595959,dashed]->  BasicCommands
+BasicCommands        -[#595959,dashed]->  Teacher             : "«create»"
+BasicCommands        -[#595959,dashed]->  TeachingRequirement : "«create»"
+Course              "1" *-[#595959,plain]-> "assignedTeachers\n*" Teacher
+Training             -[#595959,dashed]->  BasicCommands
+Training            "1" *-[#595959,plain]-> "teacher\n*" Teacher
+Training            "1" *-[#595959,plain]-> "teachingRequirements\n*" TeachingRequirement
+Training             -[#595959,dashed]->  Training
+maincommand          -[#595959,dashed]->  Training
+@enduml
