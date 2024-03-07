@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import Entity.AssignedRequirement;
 import Entity.Teacher;
 import Entity.TeachingRequirement; // 确保引入了正确的TeachingRequirement类
 
@@ -123,6 +124,38 @@ public class BasicCommands {
         }
         return teacher;
     }
+    public static List<AssignedRequirement> readAssignedRequirementsFromTxtFile(String filePath) {
+        List<AssignedRequirement> assignedRequirements = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // 假设每行格式为: directorName,requestId,className,TId,name
+                String[] parts = line.split(",");
+                if (parts.length == 5) {
+                    String directorName = parts[0].trim();
+                    int requestId = Integer.parseInt(parts[1].trim());
+                    String className = parts[2].trim();
+                    int TId = Integer.parseInt(parts[3].trim());
+                    String name = parts[4].trim();
+
+                    // 创建AssignedRequirement对象并添加到列表中
+                    AssignedRequirement requirement = new AssignedRequirement();
+                    requirement.setDirectorName(directorName);
+                    requirement.setRequestId(requestId);
+                    requirement.setClassName(className);
+                    requirement.setTId(TId);
+                    requirement.setTName(name);
+
+                    assignedRequirements.add(requirement);
+                }
+            }
+        } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        return assignedRequirements;
+    }
 
     //write a line
     public static void writeline(){
@@ -145,8 +178,10 @@ public class BasicCommands {
         }
     }
 //    Use teacher ID and approval ID to make approval request
-    public static void Approvalrequest(List<TeachingRequirement> request, List<Teacher> teacher, int requestID, int teacherID){
+    public static void Approvalrequest(List<TeachingRequirement> request, List<Teacher> teacher, List<AssignedRequirement> assignedRequirements,
+                                       int requestID, int teacherID){
         TeachingRequirement requirement = null;
+        AssignedRequirement assignedRequirement = null;
         boolean isChanged = false;
         boolean Notfound = true;
         for(TeachingRequirement tr:request){
@@ -172,6 +207,11 @@ public class BasicCommands {
                 }else{
                         te.setAssign();
                         te.setAssigned(requirement.getClassName());
+                        assignedRequirement.setClassName(requirement.getClassName());
+                        assignedRequirement.setRequestId(requirement.getRequestId());
+                        assignedRequirement.setTId(te.getId());
+                        assignedRequirement.setTName(te.getName());
+                        assignedRequirements.add(assignedRequirement);
                         requirement.setRequestStatus("approved");
                         isChanged = true;
                 }
@@ -195,6 +235,26 @@ public class BasicCommands {
                     isChange = true;
                 } else isPending = true;
             }
+        }
+    }
+    public static void writeAssignedRequirementsToTxtFile(List<AssignedRequirement> assignedRequirements,
+                                                          String filePath) {
+        StringBuilder txtBuilder = new StringBuilder();
+        for (AssignedRequirement requirement : assignedRequirements) {
+            // 格式化字符串并追加到StringBuilder
+            txtBuilder.append(String.format("%s,%s,%d,%s,%s\n",
+                    requirement.getDirectorName(),
+                    requirement.getRequestId(),
+                    requirement.getClassName(),
+                    requirement.getTId(),
+                    requirement.getTName()));
+        }
+
+        // 写入文件
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) {
+            writer.write(txtBuilder.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

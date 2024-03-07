@@ -1,5 +1,6 @@
 package user;
 
+import Entity.AssignedRequirement;
 import Entity.Teacher;
 import Entity.TeachingRequirement;
 import Logic.BasicCommands;
@@ -12,9 +13,11 @@ import java.util.List;
 public class Director {
     private static String requestfile ="src\\conf\\Teaching_Requirement.txt"; //The fine name of requirement
     private static String teacherfile ="src\\conf\\Teacher.txt";  //The file name of the teacher
-
+    private static String assignedfile ="src\\conf\\Assigned_Requirement.txt";//The file name of the assigned request
     private static List<TeachingRequirement> teachingRequirements = BasicCommands.readTeachingRequirementsFromTxtFile(requestfile);
     private static List<Teacher> teacher = BasicCommands.readTeacherFromTxtFile(teacherfile);
+    private static List<AssignedRequirement> assigned = BasicCommands.readAssignedRequirementsFromTxtFile(assignedfile);
+
     public static void director() {
         //Read from file
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -34,6 +37,7 @@ public class Director {
                     //write current data to the file
                     BasicCommands.writeTeachingRequirementsToTxtFile(teachingRequirements, requestfile);
                     BasicCommands.writeTeacherToTxtFile(teacher, teacherfile);
+                    BasicCommands.writeAssignedRequirementsToTxtFile(assigned,assignedfile);
                     break;
                 }
                 //Input Order checking
@@ -42,7 +46,7 @@ public class Director {
                 else if (Order[0].equals("reject")) {
                     BasicCommands.Rejecting(teachingRequirements, Integer.parseInt(Order[1]));
                 } else
-                    BasicCommands.Approvalrequest(teachingRequirements, teacher, Integer.parseInt(Order[0]), Integer.parseInt(Order[1]));
+                    BasicCommands.Approvalrequest(teachingRequirements, teacher, assigned,Integer.parseInt(Order[0]), Integer.parseInt(Order[1]));
                 BasicCommands.writeline();
             } catch (IOException e) {
                 e.printStackTrace();
