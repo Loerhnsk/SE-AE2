@@ -11,7 +11,9 @@ import Logic.BasicCommands;
 public class Training {
     private static String requestfile ="src\\conf\\Teaching_Requirement.txt"; //The fine name of requirement
     private static String teacherfile ="src\\conf\\Teacher.txt";  //The file name of the teacher
-
+    private String name;
+    private int id;
+    private String skill;
     private static List<TeachingRequirement> teachingRequirements = BasicCommands.readTeachingRequirementsFromTxtFile(requestfile);
     private static List<Teacher> teacher = BasicCommands.readTeacherFromTxtFile(teacherfile);
     //output all of available teacher

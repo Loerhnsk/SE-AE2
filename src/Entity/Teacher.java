@@ -48,6 +48,7 @@ public class Teacher implements Serializable {
         }
         return false;
     }
+
     public void addSkill(String skill) {
         this.skills.add(skill);
     }

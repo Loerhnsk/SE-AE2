@@ -8,32 +8,51 @@ class Approval {
   + Approval(int, String, LocalDateTime, String):
   - comments: String
   - approvalTime: LocalDateTime
-  - ID: int
   - approver: String
-  + isApproved(): int
+  - ID: int
   + toString(): String
+  + isApproved(): int
    approvalTime: LocalDateTime
-   rID: int
-   comments: String
-   approved: int
-   approver: String
    ID: int
+   comments: String
+   approver: String
+   approved: int
+   rID: int
+}
+class AssignedRequirement {
+  + AssignedRequirement():
+  - directorName: String
+  - requestId: int
+  - className: String
+  - TId: int
+  + toString(): String
+   TName: String
+   directorName: String
+   className: String
+   requestId: int
+   TId: int
 }
 class BasicCommands {
   + BasicCommands():
-  + readTeachingRequirementsFromTxtFile(String): List<TeachingRequirement>
-  + writeTeacherToTxtFile(List<Teacher>, String): void
   + readTeacherFromTxtFile(String): List<Teacher>
-  + writeline(): void
-  + writeTeachingRequirementsToTxtFile(List<TeachingRequirement>, String): void
+  + writeAssignedRequirementsToTxtFile(List<AssignedRequirement>, String): void
+  + writeTeacherToTxtFile(List<Teacher>, String): void
+  + outputTeacher(List<Teacher>): void
+  + readAssignedRequirementsFromTxtFile(String): List<AssignedRequirement>
+  + Rejecting(List<TeachingRequirement>, int): void
+  + Approvalrequest(List<TeachingRequirement>, List<Teacher>, List<AssignedRequirement>, int, int): void
   + main(String[]): void
+  + writeTeachingRequirementsToTxtFile(List<TeachingRequirement>, String): void
+  + readTeachingRequirementsFromTxtFile(String): List<TeachingRequirement>
+  + writeline(): void
+  + outputrequirement(List<TeachingRequirement>): void
 }
 class Course {
   + Course(String, String):
-  - courseId: String
   - assignedTeachers: List<Teacher>
-  - requiredSkills: List<String>
+  - courseId: String
   - courseName: String
+  - requiredSkills: List<String>
   + toString(): String
   + addRequiredSkill(String): void
   + assignTeacher(Teacher): void
@@ -42,59 +61,57 @@ class Course {
    courseName: String
    assignedTeachers: List<Teacher>
 }
+class Registration {
+  + Registration():
+  - showTeacher(): void
+  - register(String[]): String
+  - checkteacherID(int): boolean
+  - del(String): String
+  + registration(): void
+}
 class Teacher {
   + Teacher(String, int, List<String>, boolean, String):
-  - train: String
-  - id: int
   - name: String
+  - id: int
+  - train: String
+  - assigned: String
   - skills: List<String>
-  + setAssign(): void
   + toString(): String
+  + setAssign(): void
   + addSkill(String): void
-  + checkSkill(String): boolean
   + checkAssign(): boolean
+  + checkSkill(String): boolean
    name: String
-   train: String
-   skills: List<String>
    id: int
+   train: String
+   assigned: String
+   skills: List<String>
 }
 class TeachingRequirement {
   + TeachingRequirement(String, String, int, String, String, String):
   - className: String
   - requirement: String
-  - requestId: int
-  - directorName: String
   - teachingTime: String
   - requestStatus: String
-  + toString(): String
+  - requestId: int
+  - directorName: String
   + checkPending(): boolean
+  + toString(): String
    directorName: String
    className: String
    requirement: String
-   requestStatus: String
    requestId: int
+   requestStatus: String
    teachingTime: String
 }
-class Training {
-  + Training():
-  + training(): void
-  - Train(List<TeachingRequirement>, List<Teacher>, int, int): void
-  - Rejecting(List<TeachingRequirement>, int): void
-  - outputrequirement(List<TeachingRequirement>): void
-  - outputTeacher(List<Teacher>): void
-}
-class maincommand {
-  + maincommand():
-  + main(String[]): void
-}
 
+BasicCommands        -[#595959,dashed]->  AssignedRequirement : "«create»"
 BasicCommands        -[#595959,dashed]->  BasicCommands
 BasicCommands        -[#595959,dashed]->  Teacher             : "«create»"
 BasicCommands        -[#595959,dashed]->  TeachingRequirement : "«create»"
 Course              "1" *-[#595959,plain]-> "assignedTeachers\n*" Teacher
-Training             -[#595959,dashed]->  BasicCommands
-Training            "1" *-[#595959,plain]-> "teacher\n*" Teacher
-Training            "1" *-[#595959,plain]-> "teachingRequirements\n*" TeachingRequirement
-Training             -[#595959,dashed]->  Training
-maincommand          -[#595959,dashed]->  Training
+Registration         -[#595959,dashed]->  BasicCommands
+Registration         -[#595959,dashed]->  Registration
+Registration        "1" *-[#595959,plain]-> "teacher\n*" Teacher
+Registration         -[#595959,dashed]->  Teacher             : "«create»"
 @enduml

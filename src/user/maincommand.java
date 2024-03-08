@@ -23,6 +23,9 @@ public class maincommand {
                 {
                     Director.director();
                 }
+                if (userInput.equals("Registeration")){
+                    Registration.registration();
+                }
             }catch (IOException e) {
                 e.printStackTrace();
             }
