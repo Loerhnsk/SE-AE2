@@ -181,9 +181,7 @@ public class BasicCommands {
     public static void Approvalrequest(List<TeachingRequirement> request, List<Teacher> teacher, List<AssignedRequirement> assignedRequirements,
                                        int requestID, int teacherID){
         TeachingRequirement requirement = null;
-        AssignedRequirement assignedRequirement = new AssignedRequirement();
         boolean isChanged = false;
-        boolean Notfound = true;
         for(TeachingRequirement tr:request){
             if(tr.getRequestId() == requestID){
                 if(!tr.checkPending()){
@@ -191,29 +189,33 @@ public class BasicCommands {
                     return;
                 }else {
                     requirement = tr;
-                    Notfound = false;
                 }
             }
         }
-        if (Notfound) {
+        if (requirement==null) {
             System.out.println("Request Not Found");
             return;
         }
-        for(Teacher te:teacher){
-            if(te.getId() == teacherID){
-                if(te.checkAssign()){
+        for (Teacher te : teacher) {
+            if (te.getId() == teacherID) {
+                if (te.checkAssign()) {
                     System.out.println("Already Assigned");
                     return;
-                }else{
-                        te.setAssign();
-                        te.setAssigned(requirement.getClassName());
-                        assignedRequirement.setClassName(requirement.getClassName());
-                        assignedRequirement.setRequestId(requirement.getRequestId());
-                        assignedRequirement.setTId(te.getId());
-                        assignedRequirement.setTName(te.getName());
-                        assignedRequirements.add(assignedRequirement);
-                        requirement.setRequestStatus("approved");
-                        isChanged = true;
+                } else if (!te.checkSkill(requirement.getRequirement())) {
+                    System.out.println("The corresponding teacher does not have this skill");
+                    return;
+                } else {
+                    te.setAssign();
+                    te.setAssigned(requirement.getClassName());
+                    AssignedRequirement assignedRequirement = new AssignedRequirement(); // Create a new instance
+                    assignedRequirement.setClassName(requirement.getRequirement());
+                    assignedRequirement.setRequestId(requirement.getRequestId());
+                    assignedRequirement.setTId(te.getId());
+                    assignedRequirement.setTName(te.getName());
+
+                    assignedRequirements.add(assignedRequirement);
+                    requirement.setRequestStatus("approved");
+                    isChanged = true;
                 }
             }
         }
@@ -241,8 +243,8 @@ public class BasicCommands {
                                                           String filePath) {
         StringBuilder txtBuilder = new StringBuilder();
         for (AssignedRequirement requirement : assignedRequirements) {
-            // 格式化字符串并追加到StringBuilder
-            txtBuilder.append(String.format("%s,%s,%d,%s,%s\n",
+            // Corrected order of placeholders
+            txtBuilder.append(String.format("%s,%d,%s,%d,%s\n",
                     requirement.getDirectorName(),
                     requirement.getRequestId(),
                     requirement.getClassName(),
