@@ -260,20 +260,12 @@ public class BasicCommands {
         }
     }
 
-
-    public static void main(String[] args) {
-        //List<TeachingRequirement> teachingRequirements = List.of(
-        //         new TeachingRequirement("Jesus", "John Doe", 1, "Mathematics", "semester 1", "pending"),
-        //         new TeachingRequirement("kyaru", "Jane Smith", 2, "English", "semester 2", "approved")
-        // 确保TeachingRequirement类构造器和方法与此调用相匹配
-        //  );
-        String filePath = "src\\conf\\Teaching_Requirement.txt";
-        // writeTeachingRequirementsToTxtFile(teachingRequirements, filePath);
-
-        List<TeachingRequirement> teachingRequirements1 = readTeachingRequirementsFromTxtFile(filePath);
-        for (TeachingRequirement tr : teachingRequirements1) {
-            System.out.println(tr);
-        }
+    //输入教学需求的课程名、上课时间和对应的课程主人来添加到List中，然后输出到txt
+    public static void addRequirement(String className,String time, String director,String skill, String filePath){
+        List<TeachingRequirement> list = readTeachingRequirementsFromTxtFile(filePath);
+        TeachingRequirement newRe = new TeachingRequirement(className, director, skill, time);
+        list.add(newRe);
+        writeTeachingRequirementsToTxtFile(list, filePath);
     }
 
 }

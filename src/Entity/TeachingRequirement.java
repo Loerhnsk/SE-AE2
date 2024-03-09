@@ -11,6 +11,7 @@ public class TeachingRequirement implements Serializable {
     private String requirement; // 需求内容
     private String teachingTime; // 教学时间
     private String requestStatus; // 申请状态
+    private static int autoID;//自动生成的ID
 
     // 构造器
     public TeachingRequirement(String className, String directorName, int requestId, String requirement, String teachingTime, String requestStatus) {
@@ -21,6 +22,18 @@ public class TeachingRequirement implements Serializable {
         this.teachingTime = teachingTime;
         this.requestStatus = requestStatus;
     }
+
+    //创建新的
+    public TeachingRequirement(String className, String directorName,  String requirement, String teachingTime) {
+        this.className = className;
+        this.directorName = directorName;
+        this.requestId = autoID;
+        autoID = autoID +1;
+        this.requirement = requirement;
+        this.teachingTime = teachingTime;
+        this.requestStatus = "pending";
+    }
+
 
 
     // directorName的getter和setter
