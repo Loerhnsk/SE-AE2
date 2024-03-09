@@ -26,6 +26,9 @@ public class maincommand {
                 if (userInput.equals("Registeration")){
                     Registration.registration();
                 }
+                if (userInput.equals("CourseDirector")){
+                    CourseDirector.courseDirector();
+                }
             }catch (IOException e) {
                 e.printStackTrace();
             }

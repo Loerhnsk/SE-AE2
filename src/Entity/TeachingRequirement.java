@@ -99,12 +99,13 @@ public class TeachingRequirement implements Serializable {
     @Override
     public String toString() {
 
-        return String.format("%-15s %-40s %-40s %-40s %-30s",
+        return String.format("%-15s %-40s %-40s %-40s %-30s %-30s",
                 "requestId:" + requestId,
                 "className:" + className,
                 "directorName:" + directorName,
                 "requirement:" + requirement,
-                "teachingTime:" + requestStatus);
+                "teachingTime:" + teachingTime,
+                "Status:"+ requestStatus);
 
 
     }

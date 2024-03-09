@@ -177,6 +177,12 @@ public class BasicCommands {
             if(tr.checkPending())System.out.println(tr);
         }
     }
+
+    public static void outputallrequirement(List<TeachingRequirement> list){
+        for (TeachingRequirement tr : list) {
+            System.out.println(tr);
+        }
+    }
 //    Use teacher ID and approval ID to make approval request
     public static void Approvalrequest(List<TeachingRequirement> request, List<Teacher> teacher, List<AssignedRequirement> assignedRequirements,
                                        int requestID, int teacherID){
@@ -260,12 +266,5 @@ public class BasicCommands {
         }
     }
 
-    //输入教学需求的课程名、上课时间和对应的课程主人来添加到List中，然后输出到txt
-    public static void addRequirement(String className,String time, String director,String skill, String filePath){
-        List<TeachingRequirement> list = readTeachingRequirementsFromTxtFile(filePath);
-        TeachingRequirement newRe = new TeachingRequirement(className, director, skill, time);
-        list.add(newRe);
-        writeTeachingRequirementsToTxtFile(list, filePath);
-    }
 
 }
