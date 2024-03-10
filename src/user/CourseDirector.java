@@ -27,22 +27,37 @@ public class CourseDirector {
                 System.out.println("Teaching Requirements");
                 BasicCommands.outputallrequirement(tr);
                 BasicCommands.writeline();
-                System.out.print("Enter 'exit' to exit, or enter 'add' to add a requirement: ");
+                System.out.println("Enter 'exit' to exit");
+                System.out.println("Enter (add,className,director,requiredSkill,time) to add a requirement");
+                System.out.println("Enter (delete,ID) to delete a requirement");
                 String userInput = reader.readLine();
                 if (userInput.equals("exit")) {
                     BasicCommands.writeTeachingRequirementsToTxtFile(tr, requestfile);
                     break;
-                } else if (userInput.equals("add")) {
-                    System.out.print("Enter the requirement (className,director,requiredSkill,time): ");
-                    String requirementInput = reader.readLine(); 
-                    String[] details = requirementInput.split(","); 
-                    if (details.length != 4) {
-                        System.out.println("Wrong Input! Please use the format: className,director,requiredSkill,time");
-                    } else {                    
-                        TeachingRequirement newtr = new TeachingRequirement(details[0], details[1],details[2], details[3]);
-                        newtr.setRequestId(tr.size()+1);
+                } else {
+                    String[] details = userInput.split(",");
+                    if (!details[0].equals("add") && !details[0].equals("delete")) {
+                        System.out.println("Wrong Input! ");
+                    } else if (details[0].equals("add")) {
+                        TeachingRequirement newtr = new TeachingRequirement(details[1], details[2], details[3],
+                                details[4]);
+                        newtr.setRequestId(tr.size() + 1);
                         tr.add(newtr);
-                        BasicCommands.writeTeachingRequirementsToTxtFile(tr,requestfile);
+                    } else if (details[0].equals("delete")) {
+                        int deleteId = Integer.parseInt(details[1]);
+                        boolean found = false;
+                        for (int i = 0; i < tr.size(); i++) {
+                            if (tr.get(i).getRequestId() == deleteId) {
+                                tr.remove(i);
+                                System.out.println("Requirement with ID " + deleteId + " has been deleted.");
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            System.out.println("Error: No requirement found with ID " + deleteId);
+                        }
+                        System.out.println();
                     }
                 }
             } catch (IOException e) {
@@ -50,5 +65,5 @@ public class CourseDirector {
             }
         }
     }
-    
+
 }
