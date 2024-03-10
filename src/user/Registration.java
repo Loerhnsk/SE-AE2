@@ -24,6 +24,7 @@ public class Registration {
         int id = Integer.parseInt(num);
         for(int i = 0; i < teacher.size(); ++i){
             if(teacher.get(i).getId() == id){
+                if(teacher.get(i).checkAssign()) return "Assigned teacher. Wrong command";
                 teacher.remove(i);
                 return "Deleted";
             }
@@ -38,13 +39,13 @@ public class Registration {
     }
     private static String register(String[] parts){
 
-        if(parts.length != 3) return "Wrong command";
-        if(!parts[0].matches("\\d+")) return "Wrong command";
-        int id = Integer.parseInt(parts[0]);
+        if(parts.length != 4||!parts[0].equals("Add")) return "Wrong command";
+        if(!parts[1].matches("\\d+")) return "Wrong command";
+        int id = Integer.parseInt(parts[1]);
         if(!checkteacherID(id)) return "Id exist";
-        String name = parts[1];
-        String[] skill = parts[2].split("/");
-        List<String> skills = new ArrayList(Arrays.asList(skill));
+        String name = parts[2];
+        String[] skill = parts[3].split("/");
+        List<String> skills = new ArrayList<>(Arrays.asList(skill));
         Teacher nTeacher = new Teacher(name,id,skills,false,"");
         teacher.add(nTeacher);
         return "Register Succeed";

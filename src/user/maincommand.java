@@ -23,7 +23,7 @@ public class maincommand {
                 {
                     Director.director();
                 }
-                if (userInput.equals("Registeration")){
+                if (userInput.equals("Registration")){
                     Registration.registration();
                 }
                 if (userInput.equals("CourseDirector")){

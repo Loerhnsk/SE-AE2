@@ -212,7 +212,7 @@ public class BasicCommands {
                     return;
                 } else {
                     te.setAssign();
-                    te.setAssigned(requirement.getClassName());
+                    //te.setAssigned(requirement.getClassName());
                     AssignedRequirement assignedRequirement = new AssignedRequirement(); // Create a new instance
                     assignedRequirement.setClassName(requirement.getRequirement());
                     assignedRequirement.setRequestId(requirement.getRequestId());

@@ -44,6 +44,10 @@ public class CourseDirector {
                         newtr.setRequestId(tr.size() + 1);
                         tr.add(newtr);
                     } else if (details[0].equals("delete")) {
+                        if(!details[1].matches("\\d+")) {
+                            System.out.println("Wrong input");
+                            continue;
+                        }
                         int deleteId = Integer.parseInt(details[1]);
                         boolean found = false;
                         for (int i = 0; i < tr.size(); i++) {
