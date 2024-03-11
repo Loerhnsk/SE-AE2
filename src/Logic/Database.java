@@ -8,7 +8,7 @@ import java.util.List;
 public class Database {
     public List<TeachingRequirement> teachingRequirements;
     public List<Teacher> teacher;
-    public Database(TxtFileDataReader reader){
+    public Database(DataReader reader){
         teachingRequirements = reader.readTeachingRequirements();
         teacher = reader.readTeachers();
     }

@@ -14,7 +14,7 @@ public class maincommand {
     public static void main(String[] args) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         // 创建 Director 实例并注入数据读取实现类
-        TxtFileDataReader dataReader = new TxtFileDataReader();
+        DataReader dataReader = new TxtFileDataReader();
         DataWriter dataWriter = new TxtFileDataWriter();
         Director director = new Director(dataReader,dataWriter);
         Training training = new Training(dataReader);

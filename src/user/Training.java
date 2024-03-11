@@ -12,10 +12,10 @@ public class Training {
     private static String requestfile ="src\\conf\\Teaching_Requirement.txt"; //The fine name of requirement
     private static String teacherfile ="src\\conf\\Teacher.txt";  //The file name of the teacher
 
-    private static TxtFileDataReader dataReader;
+    private static DataReader dataReader;
 
     // 构造函数接受 DataReader 实例
-    public Training(TxtFileDataReader dataReader) {
+    public Training(DataReader dataReader) {
         Training.dataReader = dataReader;
     }
     private String name;
