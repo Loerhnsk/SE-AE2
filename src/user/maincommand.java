@@ -1,10 +1,7 @@
 package user;
 
 
-import Logic.DataReader;
-import Logic.DataWriter;
-import Logic.TxtFileDataReader;
-import Logic.TxtFileDataWriter;
+import Logic.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,8 +13,10 @@ public class maincommand {
         // 创建 Director 实例并注入数据读取实现类
         DataReader dataReader = new TxtFileDataReader();
         DataWriter dataWriter = new TxtFileDataWriter();
-        Director director = new Director(dataReader,dataWriter);
-        Training training = new Training(dataReader);
+        Database database = new Database(dataReader, dataWriter);
+
+        Director director = new Director(database);
+        Training training = new Training(database);
 
         String teachingRequirementsPath = "src/conf/Teaching_Requirement.txt";
         String teacherPath = "src/conf/Teacher.txt";

@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class TxtFileDataWriter implements DataWriter {
-
     @Override
     public void writeTeachingRequirements(List<TeachingRequirement> teachingRequirements, String filePath) {
         // 实现写入教学需求的逻辑

@@ -9,14 +9,14 @@ import Entity.TeachingRequirement;
 import Logic.*;
 
 public class Training {
-    private static String requestfile ="src\\conf\\Teaching_Requirement.txt"; //The fine name of requirement
-    private static String teacherfile ="src\\conf\\Teacher.txt";  //The file name of the teacher
+//    private static String requestfile ="src\\conf\\Teaching_Requirement.txt"; //The fine name of requirement
+//    private static String teacherfile ="src\\conf\\Teacher.txt";  //The file name of the teacher
 
-    private static DataReader dataReader;
+    private static Database database;
 
-    // 构造函数接受 DataReader 实例
-    public Training(DataReader dataReader) {
-        Training.dataReader = dataReader;
+    // 构造函数接受 DataBase 实例
+    public Training(Database database) {
+        this.database = database;
     }
     private String name;
     private int id;
@@ -110,17 +110,16 @@ public class Training {
 
     public void training() {
         //Read from file
-        Database database = new Database(dataReader);
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         //Main loop
         while (true) {
             try {
                 //Output current state
                 System.out.println("Pending request:");
-                outputrequirement(database.teachingRequirements);
+                outputrequirement(database.getDataReader().getTeachingRequirements());
                 BasicCommands.writeline();
                 System.out.println("Available Teacher");
-                outputTeacher(database.teacher);
+                outputTeacher(database.getDataReader().getTeachers());
                 BasicCommands.writeline();
                 System.out.print("Enter request id and teacher id to match or Enter 'exit' to exit：");
                 //Read User Input from terminal
@@ -128,15 +127,17 @@ public class Training {
                 //Exit command
                 if (userInput.equals("exit")) {
                     //write current data to the file
-                    BasicCommands.writeTeachingRequirementsToTxtFile(database.teachingRequirements,requestfile);
-                    BasicCommands.writeTeacherToTxtFile(database.teacher,teacherfile);
+                    database.getDataWriter().writeTeachingRequirements(database.getDataReader().getTeachingRequirements(), database.getDataReader().getRequestFilePath());
+                    database.getDataWriter().writeTeachers(database.getDataReader().getTeachers(), database.getDataReader().getTeacherFilePath());
+//                    BasicCommands.writeTeachingRequirementsToTxtFile(database.getDataReader().getTeachingRequirements(), requestfile);
+//                    BasicCommands.writeTeacherToTxtFile(database.getDataReader().getTeachers(),teacherfile);
                     break;
                 }
                 //Input Order checking
                 String[] Order = userInput.split(",");
                 if(Order.length != 2) System.out.println("Wrong Order");
-                else if(Order[0].equals("reject"))Rejecting(database.teachingRequirements,Integer.parseInt(Order[1]));
-                else Train(database.teachingRequirements,database.teacher,Integer.parseInt(Order[0]),Integer.parseInt(Order[1]));
+                else if(Order[0].equals("reject"))Rejecting(database.getDataReader().getTeachingRequirements(),Integer.parseInt(Order[1]));
+                else Train(database.getDataReader().getTeachingRequirements(), database.getDataReader().getTeachers(), Integer.parseInt(Order[0]),Integer.parseInt(Order[1]));
                 BasicCommands.writeline();
             } catch (IOException e) {
                 e.printStackTrace();

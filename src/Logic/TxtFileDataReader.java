@@ -13,27 +13,15 @@ import java.util.List;
 
 // 具体的实现类
 public class TxtFileDataReader extends AbstractDataReader {
-
-    @Override
-    public List<TeachingRequirement> readTeachingRequirements() {
-        String filePath = ConfigManager.getRequestFilePath();
-        readTeachingRequirementsFromFile(filePath);
-        return teachingRequirements;
+    private List<TeachingRequirement> teachingRequirements;
+    private List<Teacher> teacher;
+    private List<AssignedRequirement> assignedRequirements;
+    public TxtFileDataReader(){
+        readTeachingRequirementsFromFile(ConfigManager.getRequestFilePath());
+        readTeachersFromFile(ConfigManager.getTeacherFilePath());
+        readAssignedRequirementsFromFile(ConfigManager.getAssignedFilePath());
     }
 
-    @Override
-    public List<Teacher> readTeachers() {
-        String filePath = ConfigManager.getTeacherFilePath();
-        readTeachersFromFile(filePath);
-        return teachers;
-    }
-
-    @Override
-    public List<AssignedRequirement> readAssignedRequirements() {
-        String filePath = ConfigManager.getAssignedFilePath();
-        readAssignedRequirementsFromFile(filePath);
-        return assignedRequirements;
-    }
 
     @Override
     public String getRequestFilePath() {
@@ -52,7 +40,7 @@ public class TxtFileDataReader extends AbstractDataReader {
 
     @Override
     protected void readTeachingRequirementsFromFile(String filePath) {
-        teachingRequirements = new ArrayList<>();
+        this.teachingRequirements = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -81,7 +69,7 @@ public class TxtFileDataReader extends AbstractDataReader {
 
     @Override
     protected void readTeachersFromFile(String filePath) {
-        teachers = new ArrayList<>(); // 使用类的成员变量
+        this.teacher = new ArrayList<>(); // 使用类的成员变量
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -97,7 +85,7 @@ public class TxtFileDataReader extends AbstractDataReader {
                     String Train = parts[4].trim();
                     // Add Teacher to the list
                     Teacher te = new Teacher(Name,Id,list,Approve,Train);
-                    teachers.add(te);
+                    teacher.add(te);
                 }
             }
         } catch (IOException e) {
@@ -109,7 +97,7 @@ public class TxtFileDataReader extends AbstractDataReader {
 
     @Override
     protected void readAssignedRequirementsFromFile(String filePath) {
-        assignedRequirements = new ArrayList<>(); // 使用类的成员变量
+        this.assignedRequirements = new ArrayList<>(); // 使用类的成员变量
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -138,4 +126,28 @@ public class TxtFileDataReader extends AbstractDataReader {
             e.printStackTrace();
         }
     }
+    public List<TeachingRequirement> getTeachingRequirements() {
+        return teachingRequirements;
+    }
+
+    public void setTeachingRequirements(List<TeachingRequirement> teachingRequirements) {
+        this.teachingRequirements = teachingRequirements;
+    }
+
+    public List<Teacher> getTeachers() {
+        return teacher;
+    }
+
+    public void setTeacher(List<Teacher> teacher) {
+        this.teacher = teacher;
+    }
+
+    public List<AssignedRequirement> getAssignedRequirements() {
+        return assignedRequirements;
+    }
+
+    public void setAssignedRequirements(List<AssignedRequirement> assignedRequirements) {
+        this.assignedRequirements = assignedRequirements;
+    }
+
 }

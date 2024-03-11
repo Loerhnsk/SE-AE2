@@ -9,13 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractDataReader implements DataReader {
-    protected List<TeachingRequirement> teachingRequirements;
-    protected List<Teacher> teachers;
-    protected List<AssignedRequirement> assignedRequirements;
+
     public AbstractDataReader() {
-        this.teachingRequirements = new ArrayList<>();
-        this.teachers = new ArrayList<>();
-        this.assignedRequirements = new ArrayList<>();
     }
 
     // 公共的方法

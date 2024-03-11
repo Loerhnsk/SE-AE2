@@ -1,21 +1,16 @@
 package user;
 
-import Logic.BasicCommands;
-import Logic.DataReader;
-import Logic.DataWriter;
-import Logic.TxtFileDataReader;
+import Logic.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Director {
-    private DataReader dataReader;
-    private DataWriter dataWriter;
+    private Database database;
     // 构造函数接受 DataReader 实例
-    public Director(DataReader dataReader, DataWriter dataWriter) {
-        this.dataReader = dataReader;
-        this.dataWriter = dataWriter;
+    public Director(Database database) {
+        this.database = database;
     }
 
     public void director() {
@@ -26,10 +21,10 @@ public class Director {
         while (true) {
             try {
                 System.out.println("Pending request:");
-                BasicCommands.outputrequirement(dataReader.readTeachingRequirements());
+                BasicCommands.outputrequirement(database.getDataReader().getTeachingRequirements());
                 BasicCommands.writeline();
                 System.out.println("Available Teacher");
-                BasicCommands.outputTeacher(dataReader.readTeachers());
+                BasicCommands.outputTeacher(database.getDataReader().getTeachers());
                 BasicCommands.writeline();
                 System.out.print("Enter request id and teacher id to match or Enter 'exit' to exit：");
 
@@ -37,9 +32,10 @@ public class Director {
                 String userInput = reader.readLine();
                 if (userInput.equals("exit")) {
                     // Write current data to the file
-                    dataWriter.writeTeachingRequirements(dataReader.readTeachingRequirements(), dataReader.getRequestFilePath());
-                    dataWriter.writeTeachers(dataReader.readTeachers(), dataReader.getTeacherFilePath());
-                    dataWriter.writeAssignedRequirements(dataReader.readAssignedRequirements(), dataReader.getAssignedFilePath());
+
+                   database.getDataWriter().writeTeachingRequirements(database.getDataReader().getTeachingRequirements(), database.getDataReader().getRequestFilePath());
+                   database.getDataWriter().writeTeachers(database.getDataReader().getTeachers(), database.getDataReader().getTeacherFilePath());
+                    database.getDataWriter().writeAssignedRequirements(database.getDataReader().getAssignedRequirements(), database.getDataReader().getAssignedFilePath());
                     break;
                 }
 
@@ -49,11 +45,11 @@ public class Director {
                 if (Order.length != 2)
                     System.out.println("Wrong Order");
                 else if (Order[0].equals("reject"))
-                    BasicCommands.Rejecting(dataReader.readTeachingRequirements(), Integer.parseInt(Order[1]));
+                    BasicCommands.Rejecting(database.getDataReader().getTeachingRequirements(), Integer.parseInt(Order[1]));
                 else
-                    BasicCommands.Approvalrequest(dataReader.readTeachingRequirements(),
-                            dataReader.readTeachers(),
-                            dataReader.readAssignedRequirements(),
+                    BasicCommands.Approvalrequest(database.getDataReader().getTeachingRequirements(),
+                            database.getDataReader().getTeachers(),
+                            database.getDataReader().getAssignedRequirements(),
                             Integer.parseInt(Order[0]), Integer.parseInt(Order[1]));
 
                 BasicCommands.writeline();

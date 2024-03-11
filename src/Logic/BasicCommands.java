@@ -199,6 +199,7 @@ public class BasicCommands {
                 }
             }
         }
+
         if (requirement==null) {
             System.out.println("Request Not Found");
             return;
@@ -213,6 +214,7 @@ public class BasicCommands {
                     return;
                 } else {
                     te.setAssign();
+                    System.out.println(te.checkAssign());
                     AssignedRequirement assignedRequirement = new AssignedRequirement(); // Create a new instance
                     assignedRequirement.setClassName(requirement.getRequirement());
                     assignedRequirement.setRequestId(requirement.getRequestId());
@@ -222,6 +224,7 @@ public class BasicCommands {
 
                     assignedRequirements.add(assignedRequirement);
                     requirement.setRequestStatus("approved");
+                    System.out.println(requirement.checkPending());
                     isChanged = true;
                 }
             }
