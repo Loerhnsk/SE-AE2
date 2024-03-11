@@ -1,0 +1,83 @@
+@startuml
+participant Actor
+Actor -> Director : director
+activate Director
+Director -> BasicCommands : outputrequirement
+activate BasicCommands
+BasicCommands -> TeachingRequirement : checkPending
+activate TeachingRequirement
+TeachingRequirement --> BasicCommands
+deactivate TeachingRequirement
+BasicCommands --> Director
+deactivate BasicCommands
+Director -> BasicCommands : writeline
+activate BasicCommands
+BasicCommands --> Director
+deactivate BasicCommands
+Director -> BasicCommands : outputTeacher
+activate BasicCommands
+BasicCommands -> Teacher : checkAssign
+activate Teacher
+Teacher --> BasicCommands
+deactivate Teacher
+BasicCommands --> Director
+deactivate BasicCommands
+Director -> BasicCommands : writeline
+activate BasicCommands
+BasicCommands --> Director
+deactivate BasicCommands
+Director -> BasicCommands : writeTeachingRequirementsToTxtFile
+activate BasicCommands
+BasicCommands --> Director
+deactivate BasicCommands
+Director -> BasicCommands : writeTeacherToTxtFile
+activate BasicCommands
+BasicCommands -> Teacher : checkAssign
+activate Teacher
+Teacher --> BasicCommands
+deactivate Teacher
+BasicCommands --> Director
+deactivate BasicCommands
+Director -> BasicCommands : writeAssignedRequirementsToTxtFile
+activate BasicCommands
+BasicCommands --> Director
+deactivate BasicCommands
+Director -> BasicCommands : Rejecting
+activate BasicCommands
+BasicCommands -> TeachingRequirement : checkPending
+activate TeachingRequirement
+TeachingRequirement --> BasicCommands
+deactivate TeachingRequirement
+BasicCommands --> Director
+deactivate BasicCommands
+Director -> BasicCommands : Approvalrequest
+activate BasicCommands
+BasicCommands -> TeachingRequirement : checkPending
+activate TeachingRequirement
+TeachingRequirement --> BasicCommands
+deactivate TeachingRequirement
+BasicCommands -> Teacher : checkAssign
+activate Teacher
+Teacher --> BasicCommands
+deactivate Teacher
+BasicCommands -> Teacher : checkSkill
+activate Teacher
+Teacher --> BasicCommands
+deactivate Teacher
+BasicCommands -> Teacher : setAssign
+activate Teacher
+Teacher --> BasicCommands
+deactivate Teacher
+create AssignedRequirement
+BasicCommands -> AssignedRequirement : new
+activate AssignedRequirement
+AssignedRequirement --> BasicCommands
+deactivate AssignedRequirement
+BasicCommands --> Director
+deactivate BasicCommands
+Director -> BasicCommands : writeline
+activate BasicCommands
+BasicCommands --> Director
+deactivate BasicCommands
+return
+@enduml

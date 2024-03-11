@@ -14,9 +14,10 @@ public class maincommand {
     public static void main(String[] args) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         // 创建 Director 实例并注入数据读取实现类
-        DataReader dataReader = new TxtFileDataReader();
+        TxtFileDataReader dataReader = new TxtFileDataReader();
         DataWriter dataWriter = new TxtFileDataWriter();
         Director director = new Director(dataReader,dataWriter);
+        Training training = new Training(dataReader);
 
         String teachingRequirementsPath = "src/conf/Teaching_Requirement.txt";
         String teacherPath = "src/conf/Teacher.txt";
@@ -32,7 +33,7 @@ while(true){
                     break;
                 }
                 if (userInput.equals("Training")) {
-                    Training.training();
+                    training.training();
                 }
                 if(userInput.equals("Director"))
                 {

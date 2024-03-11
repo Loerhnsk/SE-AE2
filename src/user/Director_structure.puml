@@ -1,0 +1,185 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "user.Director",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_2080559107 { 
+   	label=Entity
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   Teacher2080559107[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Teacher</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   assign: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   skills: List&lt;String&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   train: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addSkill(skill: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ checkAssign(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ checkSkill(skill: String): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TeachingRequirement2080559107[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TeachingRequirement</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   className: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   directorName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   requestId: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   requestStatus: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   requirement: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   teachingTime: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ checkPending(): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_3599307 { 
+   	label=user
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   Director3599307[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Director</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ director()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_73596734 { 
+   	label=Logic
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   BasicCommands73596734[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BasicCommands</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ Approvalrequest(request: List&lt;TeachingRequirement&gt;, teacher: List&lt;Teacher&gt;, assignedRequirements: List&lt;AssignedRequirement&gt;, requestID: int, teacherID: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ Rejecting(list: List&lt;TeachingRequirement&gt;, ID: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ outputTeacher(list: List&lt;Teacher&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ outputallrequirement(list: List&lt;TeachingRequirement&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ outputrequirement(list: List&lt;TeachingRequirement&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ readAssignedRequirementsFromTxtFile(filePath: String): List&lt;AssignedRequirement&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ readTeacherFromTxtFile(filePath: String): List&lt;Teacher&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ readTeachingRequirementsFromTxtFile(filePath: String): List&lt;TeachingRequirement&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ writeAssignedRequirementsToTxtFile(assignedRequirements: List&lt;AssignedRequirement&gt;, filePath: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ writeTeacherToTxtFile(teacher: List&lt;Teacher&gt;, filePath: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ writeTeachingRequirementsToTxtFile(teachingRequirements: List&lt;TeachingRequirement&gt;, filePath: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ writeline()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+'edges    
+
+    
+}
+@enduml

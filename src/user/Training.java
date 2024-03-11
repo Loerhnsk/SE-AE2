@@ -6,37 +6,44 @@ import java.util.List;
 import Entity.Teacher;
 import Entity.TeachingRequirement;
 
-import Logic.BasicCommands;
+import Logic.*;
 
 public class Training {
     private static String requestfile ="src\\conf\\Teaching_Requirement.txt"; //The fine name of requirement
     private static String teacherfile ="src\\conf\\Teacher.txt";  //The file name of the teacher
+
+    private static TxtFileDataReader dataReader;
+
+    // 构造函数接受 DataReader 实例
+    public Training(TxtFileDataReader dataReader) {
+        Training.dataReader = dataReader;
+    }
     private String name;
     private int id;
     private String skill;
-    private static List<TeachingRequirement> teachingRequirements = BasicCommands.readTeachingRequirementsFromTxtFile(requestfile);
-    private static List<Teacher> teacher = BasicCommands.readTeacherFromTxtFile(teacherfile);
+    //private static List<TeachingRequirement> teachingRequirements = BasicCommands.readTeachingRequirementsFromTxtFile(requestfile);
+    //private static List<Teacher> teacher = BasicCommands.readTeacherFromTxtFile(teacherfile);
     //output all of available teacher
 
   //  public Training(String requestfile, String teacherfile){
    //     teachingRequirements = BasicCommands.readTeachingRequirementsFromTxtFile(requestfile);
    //     teacher = BasicCommands.readTeacherFromTxtFile(teacherfile);
    // }
-    private static void outputTeacher(List<Teacher> list){
+    private void outputTeacher(List<Teacher> list){
         for (Teacher te : list) {
             if(!te.checkAssign())System.out.println(te);
         }
     }
 
     //output all of the pending requirement
-    private static void outputrequirement(List<TeachingRequirement> list){
+    private void outputrequirement(List<TeachingRequirement> list){
         for (TeachingRequirement tr : list) {
             if(tr.checkPending())System.out.println(tr);
         }
     }
 
     //Training a teacher(teacher ID) for the skill of request(requestID)
-    private static void Train(List<TeachingRequirement> request, List<Teacher> teacher, int requestID, int teacherID){
+    private void Train(List<TeachingRequirement> request, List<Teacher> teacher, int requestID, int teacherID){
         TeachingRequirement requirement = null;
         boolean isChanged = false;
         boolean Notfound = true;
@@ -82,7 +89,7 @@ public class Training {
     }
 
     //Order of rejecting a requirement with ID
-    private static void Rejecting(List<TeachingRequirement> list, int ID){
+    private void Rejecting(List<TeachingRequirement> list, int ID){
             boolean isPending = false;
             boolean isChange = false;
             // 读取文件内容
@@ -101,19 +108,19 @@ public class Training {
 
     }
 
-    public static void training() {
+    public void training() {
         //Read from file
-
+        Database database = new Database(dataReader);
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         //Main loop
         while (true) {
             try {
                 //Output current state
                 System.out.println("Pending request:");
-                outputrequirement(teachingRequirements);
+                outputrequirement(database.teachingRequirements);
                 BasicCommands.writeline();
                 System.out.println("Available Teacher");
-                outputTeacher(teacher);
+                outputTeacher(database.teacher);
                 BasicCommands.writeline();
                 System.out.print("Enter request id and teacher id to match or Enter 'exit' to exit：");
                 //Read User Input from terminal
@@ -121,15 +128,15 @@ public class Training {
                 //Exit command
                 if (userInput.equals("exit")) {
                     //write current data to the file
-                    BasicCommands.writeTeachingRequirementsToTxtFile(teachingRequirements,requestfile);
-                    BasicCommands.writeTeacherToTxtFile(teacher,teacherfile);
+                    BasicCommands.writeTeachingRequirementsToTxtFile(database.teachingRequirements,requestfile);
+                    BasicCommands.writeTeacherToTxtFile(database.teacher,teacherfile);
                     break;
                 }
                 //Input Order checking
                 String[] Order = userInput.split(",");
                 if(Order.length != 2) System.out.println("Wrong Order");
-                else if(Order[0].equals("reject"))Rejecting(teachingRequirements,Integer.parseInt(Order[1]));
-                else Train(teachingRequirements,teacher,Integer.parseInt(Order[0]),Integer.parseInt(Order[1]));
+                else if(Order[0].equals("reject"))Rejecting(database.teachingRequirements,Integer.parseInt(Order[1]));
+                else Train(database.teachingRequirements,database.teacher,Integer.parseInt(Order[0]),Integer.parseInt(Order[1]));
                 BasicCommands.writeline();
             } catch (IOException e) {
                 e.printStackTrace();
