@@ -1,7 +1,10 @@
 package user;
 
 
-import Logic.*;
+import Logic.DataReader;
+import Logic.DataWriter;
+import Logic.TxtFileDataReader;
+import Logic.TxtFileDataWriter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,6 +26,10 @@ public class maincommand {
 
 //        DirectorQueries directorQueries = new DirectorQueries(teachingRequirementsPath);
 //        TeacherQueries teacherQueries = new TeacherQueries(teacherPath);
+        Director director = new Director(dataReader,dataWriter);
+        Training training = new Training(dataReader);
+        Search search = new Search();
+
 while(true){
             try {
                 //Output current state
@@ -44,16 +51,9 @@ while(true){
                 if (userInput.equals("CourseDirector")){
                     CourseDirector.courseDirector();
                 }
-//                if (userInput.equals("QueryDirector")) {
-//                    System.out.println("Enter Director's Name:");
-//                    String directorName = reader.readLine();
-//                    directorQueries.queryDirectorRequirements(directorName);
-//                }
-//                if (userInput.equals("QueryTeacher")) {
-//                    System.out.println("Enter Teacher's Name:");
-//                    String teacherName = reader.readLine();
-//                    teacherQueries.queryTeacherAssignments(teacherName);
-//                }
+                if (userInput.equals("Search")) {
+                    search.search();
+                }
             }catch (IOException e) {
                 e.printStackTrace();
             }
