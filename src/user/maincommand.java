@@ -18,9 +18,9 @@ public class maincommand {
         String teachingRequirementsPath = "src/conf/Teaching_Requirement.txt";
         String teacherPath = "src/conf/Teacher.txt";
 
-        DirectorQueries directorQueries = new DirectorQueries(teachingRequirementsPath);
-        TeacherQueries teacherQueries = new TeacherQueries(teacherPath);
-
+//        DirectorQueries directorQueries = new DirectorQueries(teachingRequirementsPath);
+//        TeacherQueries teacherQueries = new TeacherQueries(teacherPath);
+while(true){
             try {
                 //Output current state
                 System.out.print("Command:");
@@ -33,7 +33,7 @@ public class maincommand {
                 }
                 if(userInput.equals("Director"))
                 {
-                    Director.director();
+                    director.director();
                 }
                 if (userInput.equals("Registration")){
                     Registration.registration();
@@ -41,21 +41,20 @@ public class maincommand {
                 if (userInput.equals("CourseDirector")){
                     CourseDirector.courseDirector();
                 }
-                if (userInput.equals("QueryDirector")) {
-                    System.out.println("Enter Director's Name:");
-                    String directorName = reader.readLine();
-                    directorQueries.queryDirectorRequirements(directorName);
-                }
-                if (userInput.equals("QueryTeacher")) {
-                    System.out.println("Enter Teacher's Name:");
-                    String teacherName = reader.readLine();
-                    teacherQueries.queryTeacherAssignments(teacherName);
-                }
+//                if (userInput.equals("QueryDirector")) {
+//                    System.out.println("Enter Director's Name:");
+//                    String directorName = reader.readLine();
+//                    directorQueries.queryDirectorRequirements(directorName);
+//                }
+//                if (userInput.equals("QueryTeacher")) {
+//                    System.out.println("Enter Teacher's Name:");
+//                    String teacherName = reader.readLine();
+//                    teacherQueries.queryTeacherAssignments(teacherName);
+//                }
             }catch (IOException e) {
                 e.printStackTrace();
             }
         }
-    }
+    }}
     //Main loop
 
-}
