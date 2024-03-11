@@ -14,7 +14,13 @@ public class maincommand {
         // 创建 Director 实例并注入数据读取实现类
         DataReader dataReader = new TxtFileDataReader();
         Director director = new Director(dataReader);
-        while (true) {
+
+        String teachingRequirementsPath = "src/conf/Teaching_Requirement.txt";
+        String teacherPath = "src/conf/Teacher.txt";
+
+        DirectorQueries directorQueries = new DirectorQueries(teachingRequirementsPath);
+        TeacherQueries teacherQueries = new TeacherQueries(teacherPath);
+
             try {
                 //Output current state
                 System.out.print("Command:");
@@ -27,13 +33,23 @@ public class maincommand {
                 }
                 if(userInput.equals("Director"))
                 {
-                    director.director();
+                    Director.director();
                 }
                 if (userInput.equals("Registration")){
                     Registration.registration();
                 }
                 if (userInput.equals("CourseDirector")){
                     CourseDirector.courseDirector();
+                }
+                if (userInput.equals("QueryDirector")) {
+                    System.out.println("Enter Director's Name:");
+                    String directorName = reader.readLine();
+                    directorQueries.queryDirectorRequirements(directorName);
+                }
+                if (userInput.equals("QueryTeacher")) {
+                    System.out.println("Enter Teacher's Name:");
+                    String teacherName = reader.readLine();
+                    teacherQueries.queryTeacherAssignments(teacherName);
                 }
             }catch (IOException e) {
                 e.printStackTrace();
