@@ -186,6 +186,7 @@ public class BasicCommands {
 //    Use teacher ID and approval ID to make approval request
     public static void Approvalrequest(List<TeachingRequirement> request, List<Teacher> teacher, List<AssignedRequirement> assignedRequirements,
                                        int requestID, int teacherID){
+        System.out.println("Checking requestID: " + requestID + ", teacherID: " + teacherID);
         TeachingRequirement requirement = null;
         boolean isChanged = false;
         for(TeachingRequirement tr:request){
@@ -212,12 +213,12 @@ public class BasicCommands {
                     return;
                 } else {
                     te.setAssign();
-                    //te.setAssigned(requirement.getClassName());
                     AssignedRequirement assignedRequirement = new AssignedRequirement(); // Create a new instance
                     assignedRequirement.setClassName(requirement.getRequirement());
                     assignedRequirement.setRequestId(requirement.getRequestId());
                     assignedRequirement.setTId(te.getId());
                     assignedRequirement.setTName(te.getName());
+
 
                     assignedRequirements.add(assignedRequirement);
                     requirement.setRequestStatus("approved");
@@ -230,7 +231,7 @@ public class BasicCommands {
             return;
         }
         System.out.println("Assigned");
-
+        System.out.println("Assigned Requirements After Approval: " + assignedRequirements);
     }
     public static void Rejecting(List<TeachingRequirement> list, int ID) {
         boolean isPending = false;

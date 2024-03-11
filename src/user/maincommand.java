@@ -2,7 +2,9 @@ package user;
 
 
 import Logic.DataReader;
+import Logic.DataWriter;
 import Logic.TxtFileDataReader;
+import Logic.TxtFileDataWriter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,7 +15,8 @@ public class maincommand {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         // 创建 Director 实例并注入数据读取实现类
         DataReader dataReader = new TxtFileDataReader();
-        Director director = new Director(dataReader);
+        DataWriter dataWriter = new TxtFileDataWriter();
+        Director director = new Director(dataReader,dataWriter);
 
         String teachingRequirementsPath = "src/conf/Teaching_Requirement.txt";
         String teacherPath = "src/conf/Teacher.txt";

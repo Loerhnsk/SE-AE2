@@ -1,6 +1,5 @@
 Alice Johnson,1001,Java/Mathematics,true,
-Bob Smith,1002,Python,true,Mathematics
-Eva Davis,1003,English,true,Flying
+Eva Davis,1003,English/Flying,false,
 Grace Turner,1005,Java/Python,false,
 Michael Anderson,1006,Mathematics/Physics/Chemistry,false,
 Olivia White,1007,chemistry,false,

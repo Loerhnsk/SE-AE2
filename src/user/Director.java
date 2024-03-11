@@ -2,6 +2,7 @@ package user;
 
 import Logic.BasicCommands;
 import Logic.DataReader;
+import Logic.DataWriter;
 import Logic.TxtFileDataReader;
 
 import java.io.BufferedReader;
@@ -10,10 +11,11 @@ import java.io.InputStreamReader;
 
 public class Director {
     private DataReader dataReader;
-
+    private DataWriter dataWriter;
     // 构造函数接受 DataReader 实例
-    public Director(DataReader dataReader) {
-        this.dataReader = new TxtFileDataReader();
+    public Director(DataReader dataReader, DataWriter dataWriter) {
+        this.dataReader = dataReader;
+        this.dataWriter = dataWriter;
     }
 
     public void director() {
@@ -33,12 +35,11 @@ public class Director {
 
                 // Read User Input from terminal
                 String userInput = reader.readLine();
-
                 if (userInput.equals("exit")) {
                     // Write current data to the file
-                    BasicCommands.writeTeachingRequirementsToTxtFile(dataReader.readTeachingRequirements(), dataReader.getRequestFilePath());
-                    BasicCommands.writeTeacherToTxtFile(dataReader.readTeachers(), dataReader.getTeacherFilePath());
-                    BasicCommands.writeAssignedRequirementsToTxtFile(dataReader.readAssignedRequirements(), dataReader.getAssignedFilePath());
+                    dataWriter.writeTeachingRequirements(dataReader.readTeachingRequirements(), dataReader.getRequestFilePath());
+                    dataWriter.writeTeachers(dataReader.readTeachers(), dataReader.getTeacherFilePath());
+                    dataWriter.writeAssignedRequirements(dataReader.readAssignedRequirements(), dataReader.getAssignedFilePath());
                     break;
                 }
 
