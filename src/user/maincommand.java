@@ -8,6 +8,13 @@ import java.io.InputStreamReader;
 public class maincommand {
     public static void main(String[] args) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        String teachingRequirementsPath = "src/conf/Teaching_Requirement.txt";
+        String teacherPath = "src/conf/Teacher.txt";
+
+        DirectorQueries directorQueries = new DirectorQueries(teachingRequirementsPath);
+        TeacherQueries teacherQueries = new TeacherQueries(teacherPath);
+
         while (true) {
             try {
                 //Output current state
@@ -28,6 +35,16 @@ public class maincommand {
                 }
                 if (userInput.equals("CourseDirector")){
                     CourseDirector.courseDirector();
+                }
+                if (userInput.equals("QueryDirector")) {
+                    System.out.println("Enter Director's Name:");
+                    String directorName = reader.readLine();
+                    directorQueries.queryDirectorRequirements(directorName);
+                }
+                if (userInput.equals("QueryTeacher")) {
+                    System.out.println("Enter Teacher's Name:");
+                    String teacherName = reader.readLine();
+                    teacherQueries.queryTeacherAssignments(teacherName);
                 }
             }catch (IOException e) {
                 e.printStackTrace();
