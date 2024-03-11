@@ -1,0 +1,5 @@
+# config.properties
+
+requestfile=src\\conf\\Teaching_Requirement.txt
+teacherfile=src\\conf\\Teacher.txt
+assignedfile=src\\conf\\Assigned_Requirement.txt

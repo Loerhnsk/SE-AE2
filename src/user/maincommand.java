@@ -1,6 +1,9 @@
 package user;
 
 
+import Logic.DataReader;
+import Logic.TxtFileDataReader;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,6 +11,9 @@ import java.io.InputStreamReader;
 public class maincommand {
     public static void main(String[] args) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        // 创建 Director 实例并注入数据读取实现类
+        DataReader dataReader = new TxtFileDataReader();
+        Director director = new Director(dataReader);
         while (true) {
             try {
                 //Output current state
@@ -21,7 +27,7 @@ public class maincommand {
                 }
                 if(userInput.equals("Director"))
                 {
-                    Director.director();
+                    director.director();
                 }
                 if (userInput.equals("Registration")){
                     Registration.registration();
