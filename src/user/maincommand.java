@@ -18,12 +18,8 @@ public class maincommand {
         DataWriter dataWriter = new TxtFileDataWriter();
         Director director = new Director(dataReader,dataWriter);
         Training training = new Training(dataReader);
-
-        String teachingRequirementsPath = "src/conf/Teaching_Requirement.txt";
-        String teacherPath = "src/conf/Teacher.txt";
-
-//        DirectorQueries directorQueries = new DirectorQueries(teachingRequirementsPath);
-//        TeacherQueries teacherQueries = new TeacherQueries(teacherPath);
+        Search search = new Search();
+        
 while(true){
             try {
                 //Output current state
@@ -45,16 +41,9 @@ while(true){
                 if (userInput.equals("CourseDirector")){
                     CourseDirector.courseDirector();
                 }
-//                if (userInput.equals("QueryDirector")) {
-//                    System.out.println("Enter Director's Name:");
-//                    String directorName = reader.readLine();
-//                    directorQueries.queryDirectorRequirements(directorName);
-//                }
-//                if (userInput.equals("QueryTeacher")) {
-//                    System.out.println("Enter Teacher's Name:");
-//                    String teacherName = reader.readLine();
-//                    teacherQueries.queryTeacherAssignments(teacherName);
-//                }
+                if (userInput.equals("Search")) {
+                    search.search();
+                }
             }catch (IOException e) {
                 e.printStackTrace();
             }
