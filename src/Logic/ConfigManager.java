@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigManager {
-    private static Properties properties;
+    private static final Properties properties;
 
     static {
         properties = new Properties();
@@ -20,6 +20,7 @@ public class ConfigManager {
         }
     }
 
+    // Getters for file paths
     public static String getRequestFilePath() {
         return properties.getProperty("requestfile");
     }
