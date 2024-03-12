@@ -9,14 +9,16 @@ import java.io.InputStreamReader;
 public class Director {
     private Database database;
     // 构造函数接受 DataReader 实例
-    public Director(Database database) {
-        this.database = database;
+    public Director() {
+
     }
 
     public void director() {
         // Read from file
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
+        DataReader dataReader = new TxtFileDataReader();
+        DataWriter dataWriter = new TxtFileDataWriter();
+         database = new Database(dataReader, dataWriter);
         // Output current state
         while (true) {
             try {
@@ -35,7 +37,7 @@ public class Director {
 
                    database.getDataWriter().writeTeachingRequirements(database.getDataReader().getTeachingRequirements(), database.getDataReader().getRequestFilePath());
                    database.getDataWriter().writeTeachers(database.getDataReader().getTeachers(), database.getDataReader().getTeacherFilePath());
-                    database.getDataWriter().writeAssignedRequirements(database.getDataReader().getAssignedRequirements(), database.getDataReader().getAssignedFilePath());
+                   database.getDataWriter().writeAssignedRequirements(database.getDataReader().getAssignedRequirements(), database.getDataReader().getAssignedFilePath());
                     break;
                 }
 

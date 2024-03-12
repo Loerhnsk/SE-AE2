@@ -3,6 +3,7 @@ package user;
 
 import Logic.*;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,10 +16,14 @@ public class maincommand {
         DataWriter dataWriter = new TxtFileDataWriter();
         Database database = new Database(dataReader, dataWriter);
 
-        Director director = new Director(database);
+        Director director = new Director();
         Training training = new Training(database);
-        Registration registration = new Registration(database);
 
+        String teachingRequirementsPath = "src/conf/Teaching_Requirement.txt";
+        String teacherPath = "src/conf/Teacher.txt";
+
+//        DirectorQueries directorQueries = new DirectorQueries(teachingRequirementsPath);
+//        TeacherQueries teacherQueries = new TeacherQueries(teacherPath);
         Search search = new Search();
 
 while(true){
@@ -37,7 +42,7 @@ while(true){
                     director.director();
                 }
                 if (userInput.equals("Registration")){
-                    registration.registration();
+                    Registration.registration();
                 }
                 if (userInput.equals("CourseDirector")){
                     CourseDirector.courseDirector();
