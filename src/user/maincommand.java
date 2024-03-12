@@ -21,7 +21,7 @@ public class maincommand {
         CourseDirector courseDirector = new CourseDirector();
         Search search = new Search();
 
-while(true){
+        while (true) {
             try {
                 //Output current state
                 System.out.print("Command:");
@@ -32,23 +32,23 @@ while(true){
                 if (userInput.equals("Training")) {
                     training.training();
                 }
-                if(userInput.equals("Director"))
-                {
+                if (userInput.equals("Director")) {
                     director.director();
                 }
-                if (userInput.equals("Registration")){
+                if (userInput.equals("Registration")) {
                     Registration.registration();
                 }
-                if (userInput.equals("CourseDirector")){
+                if (userInput.equals("CourseDirector")) {
                     courseDirector.courseDirector();
                 }
                 if (userInput.equals("Search")) {
                     search.search();
                 }
-            }catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-    }}
-    //Main loop
+    }
+}
+//Main loop
 
