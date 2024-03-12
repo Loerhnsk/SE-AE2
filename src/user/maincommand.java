@@ -1,10 +1,8 @@
 package user;
 
 
-import Logic.DataReader;
-import Logic.DataWriter;
-import Logic.TxtFileDataReader;
-import Logic.TxtFileDataWriter;
+import Logic.*;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,7 +16,7 @@ public class maincommand {
         DataWriter dataWriter = new TxtFileDataWriter();
         Database database = new Database(dataReader, dataWriter);
 
-        Director director = new Director(database);
+        Director director = new Director();
         Training training = new Training(database);
 
         String teachingRequirementsPath = "src/conf/Teaching_Requirement.txt";
@@ -26,8 +24,6 @@ public class maincommand {
 
 //        DirectorQueries directorQueries = new DirectorQueries(teachingRequirementsPath);
 //        TeacherQueries teacherQueries = new TeacherQueries(teacherPath);
-        Director director = new Director(dataReader,dataWriter);
-        Training training = new Training(dataReader);
         Search search = new Search();
 
 while(true){
