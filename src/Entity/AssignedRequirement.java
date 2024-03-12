@@ -2,15 +2,18 @@ package Entity;
 
 public class AssignedRequirement {
 
-    private String directorName = "Jason Adams";; // 教导主任名称
+    private String directorName = "Jason Adams";
+    ; // 教导主任名称
     private int requestId; // 申请ID
 
     private String className;//对应的课程名称
     private int TId;
     private String tname;//
-    public AssignedRequirement(){
+
+    public AssignedRequirement() {
 
     }
+
     public String getDirectorName() {
         return directorName;
     }
@@ -18,6 +21,7 @@ public class AssignedRequirement {
     public void setDirectorName(String directorName) {
         this.directorName = directorName;
     }
+
     public int getRequestId() {
         return requestId;
     }
@@ -25,6 +29,7 @@ public class AssignedRequirement {
     public void setRequestId(int requestId) {
         this.requestId = requestId;
     }
+
     public String getClassName() {
         return className;
     }
@@ -48,6 +53,7 @@ public class AssignedRequirement {
     public void setTName(String name) {
         this.tname = name;
     }
+
     public String toString() {
         return String.format("%-15s %-40s %-40s %-40s %-30s",
                 "directorName:" + directorName,

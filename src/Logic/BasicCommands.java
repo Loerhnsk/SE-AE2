@@ -14,7 +14,7 @@ import Entity.Teacher;
 import Entity.TeachingRequirement; // 确保引入了正确的TeachingRequirement类
 
 public class BasicCommands {
-//
+    //
 //    // 输入一个教学需求的List，将它们全部写入到txt中
 //    public static void writeTeachingRequirementsToTxtFile(List<TeachingRequirement> teachingRequirements,
 //                                                          String filePath) {
@@ -39,7 +39,7 @@ public class BasicCommands {
 //        }
 //    }
     public static void writeTeacherToTxtFile(List<Teacher> teacher,
-                                                          String filePath) {
+                                             String filePath) {
         StringBuilder txtBuilder = new StringBuilder();
         for (Teacher t_e : teacher) {
             //Add the information to the textBuilder
@@ -48,11 +48,11 @@ public class BasicCommands {
                     t_e.getId()));
             List<String> skill = new ArrayList<>(t_e.getSkills());
             for (String s : skill) {
-                if(s != null)txtBuilder.append(s);
+                if (s != null) txtBuilder.append(s);
                 txtBuilder.append("/");
             }
             txtBuilder.deleteCharAt(txtBuilder.length() - 1);
-            if(t_e.checkAssign())txtBuilder.append(",true,");
+            if (t_e.checkAssign()) txtBuilder.append(",true,");
             else txtBuilder.append(",false,");
             txtBuilder.append(t_e.getTrain()).append("\n");
         }
@@ -104,7 +104,7 @@ public class BasicCommands {
             String line;
             while ((line = reader.readLine()) != null) {
                 //Name,Id,skill1/skill2/..,A,Assign,Training skill
-                String[] parts = line.split(",",-1);
+                String[] parts = line.split(",", -1);
                 if (parts.length >= 5) {
                     String Name = parts[0].trim();
                     int Id = Integer.parseInt(parts[1].trim()); // 确保这是一个整数
@@ -113,7 +113,7 @@ public class BasicCommands {
                     boolean Approve = Boolean.parseBoolean(parts[3].trim());
                     String Train = parts[4].trim();
                     // Add Teacher to the list
-                    Teacher te = new Teacher(Name,Id,list,Approve,Train);
+                    Teacher te = new Teacher(Name, Id, list, Approve, Train);
                     teacher.add(te);
                 }
             }
@@ -158,10 +158,10 @@ public class BasicCommands {
 //    }
 
     //write a line
-    public static void writeline(){
+    public static void writeline() {
 
         String output = "";
-        for(int i=0; i<200 ;i++) output +="-";
+        for (int i = 0; i < 200; i++) output += "-";
         System.out.println(output);
     }
 //    //用于输出teacher

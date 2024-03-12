@@ -12,27 +12,29 @@ import java.util.List;
 
 public class Director {
     private Database database;
+
     // 构造函数接受 DataReader 实例
     public Director() {
 
     }
+
     private void Approvalrequest(List<TeachingRequirement> request, List<Teacher> teacher, List<AssignedRequirement> assignedRequirements,
-                                       int requestID, int teacherID){
+                                 int requestID, int teacherID) {
         System.out.println("Checking requestID: " + requestID + ", teacherID: " + teacherID);
         TeachingRequirement requirement = null;
         boolean isChanged = false;
-        for(TeachingRequirement tr:request){
-            if(tr.getRequestId() == requestID){
-                if(!tr.checkPending()){
+        for (TeachingRequirement tr : request) {
+            if (tr.getRequestId() == requestID) {
+                if (!tr.checkPending()) {
                     System.out.println("Not Pending");
                     return;
-                }else {
+                } else {
                     requirement = tr;
                 }
             }
         }
 
-        if (requirement==null) {
+        if (requirement == null) {
             System.out.println("Request Not Found");
             return;
         }
@@ -61,13 +63,14 @@ public class Director {
                 }
             }
         }
-        if(!isChanged){
+        if (!isChanged) {
             System.out.println("Teacher Not Found");
             return;
         }
         System.out.println("Assigned");
         System.out.println("Assigned Requirements After Approval: " + assignedRequirements);
     }
+
     public static void Rejecting(List<TeachingRequirement> list, int ID) {
         boolean isPending = false;
         boolean isChange = false;
@@ -81,6 +84,7 @@ public class Director {
             }
         }
     }
+
     //用于输出teacher
     private void outputTeacher(List<Teacher> list) {
         for (Teacher teacher : list) {
@@ -95,10 +99,11 @@ public class Director {
             if (tr.checkPending()) System.out.println(tr);
         }
     }
+
     public void director() {
         // Read from file
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-         database = new Database();
+        database = new Database();
         // Output current state
         while (true) {
             try {
@@ -115,9 +120,9 @@ public class Director {
                 if (userInput.equals("exit")) {
                     // Write current data to the file
 
-                   database.getDataWriter().writeTeachingRequirements(database.getDataReader().getTeachingRequirements(), database.getDataReader().getRequestFilePath());
-                   database.getDataWriter().writeTeachers(database.getDataReader().getTeachers(), database.getDataReader().getTeacherFilePath());
-                   database.getDataWriter().writeAssignedRequirements(database.getDataReader().getAssignedRequirements(), database.getDataReader().getAssignedFilePath());
+                    database.getDataWriter().writeTeachingRequirements(database.getDataReader().getTeachingRequirements(), database.getDataReader().getRequestFilePath());
+                    database.getDataWriter().writeTeachers(database.getDataReader().getTeachers(), database.getDataReader().getTeacherFilePath());
+                    database.getDataWriter().writeAssignedRequirements(database.getDataReader().getAssignedRequirements(), database.getDataReader().getAssignedFilePath());
                     break;
                 }
 
@@ -129,7 +134,7 @@ public class Director {
                 else if (Order[0].equals("reject"))
                     Rejecting(database.getDataReader().getTeachingRequirements(), Integer.parseInt(Order[1]));
                 else
-                   Approvalrequest(database.getDataReader().getTeachingRequirements(),
+                    Approvalrequest(database.getDataReader().getTeachingRequirements(),
                             database.getDataReader().getTeachers(),
                             database.getDataReader().getAssignedRequirements(),
                             Integer.parseInt(Order[0]), Integer.parseInt(Order[1]));

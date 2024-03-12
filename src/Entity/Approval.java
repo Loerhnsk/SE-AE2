@@ -13,7 +13,7 @@ public class Approval implements Serializable {
     private String comments; // 审批意见
     private int ID;//审批ID
     private int requirementID;//对应需求的ID
-    
+
 
     // 构造器
     public Approval(int isApproved, String approver, LocalDateTime approvalTime, String comments) {
@@ -63,24 +63,23 @@ public class Approval implements Serializable {
         this.comments = comments;
     }
 
-    public void setID(int ID){
+    public void setID(int ID) {
         this.ID = ID;
     }
 
-    public int getID(){
+    public int getID() {
         return this.ID;
     }
 
-    public int getrID(){
+    public int getrID() {
         return requirementID;
     }
 
-    public void setrID(int Id){
+    public void setrID(int Id) {
         this.requirementID = Id;
     }
 
 
-    
     // 重写toString方法以便更容易地打印和查看Approval对象的信息
     @Override
     public String toString() {

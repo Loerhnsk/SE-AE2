@@ -24,16 +24,15 @@ public class TeachingRequirement implements Serializable {
     }
 
     //创建新的
-    public TeachingRequirement(String className, String directorName,  String requirement, String teachingTime) {
+    public TeachingRequirement(String className, String directorName, String requirement, String teachingTime) {
         this.className = className;
         this.directorName = directorName;
         this.requestId = autoID;
-        autoID = autoID +1;
+        autoID = autoID + 1;
         this.requirement = requirement;
         this.teachingTime = teachingTime;
         this.requestStatus = "pending";
     }
-
 
 
     // directorName的getter和setter
@@ -76,15 +75,15 @@ public class TeachingRequirement implements Serializable {
     public String getRequestStatus() {
         return requestStatus;
     }
-    public boolean checkPending(){
-        if(this.requestStatus.equals("pending"))return true;
+
+    public boolean checkPending() {
+        if (this.requestStatus.equals("pending")) return true;
         return false;
     }
 
     public void setRequestStatus(String requestStatus) {
         this.requestStatus = requestStatus;
     }
-
 
 
     public String getClassName() {
@@ -105,7 +104,7 @@ public class TeachingRequirement implements Serializable {
                 "directorName:" + directorName,
                 "requirement:" + requirement,
                 "teachingTime:" + teachingTime,
-                "Status:"+ requestStatus);
+                "Status:" + requestStatus);
 
 
     }

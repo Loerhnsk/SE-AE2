@@ -11,6 +11,7 @@ import java.util.List;
 
 public class CourseDirector {
     private Database database;
+
     public CourseDirector() {
     }
 
@@ -46,6 +47,7 @@ public class CourseDirector {
             System.out.println("Error: No requirement found with ID " + deleteId);
         }
     }
+
     public void courseDirector() {
         Database database = new Database();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

@@ -11,7 +11,10 @@ import java.util.List;
 
 public class Search {
     private Database database;
-    public Search(){}
+
+    public Search() {
+    }
+
     public void search() {
         // 在方法开始时读取所有数据
         database = new Database();
