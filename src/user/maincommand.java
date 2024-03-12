@@ -12,22 +12,16 @@ public class maincommand {
     public static void main(String[] args) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         // 创建 Director 实例并注入数据读取实现类
-      //  DataReader dataReader = new TxtFileDataReader();
-      //  DataWriter dataWriter = new TxtFileDataWriter();
-      //  Database database = new Database(dataReader, dataWriter);
+//        DataReader dataReader = new TxtFileDataReader();
+//        DataWriter dataWriter = new TxtFileDataWriter();
+//        Database database = new Database(dataReader, dataWriter);//现在不用在这里创建了
 
         Director director = new Director();
         Training training = new Training();
-        Registration registration = new Registration();
-
-        String teachingRequirementsPath = "src/conf/Teaching_Requirement.txt";
-        String teacherPath = "src/conf/Teacher.txt";
-
-//        DirectorQueries directorQueries = new DirectorQueries(teachingRequirementsPath);
-//        TeacherQueries teacherQueries = new TeacherQueries(teacherPath);
+        CourseDirector courseDirector = new CourseDirector();
         Search search = new Search();
 
-while(true){
+        while (true) {
             try {
                 //Output current state
                 System.out.print("Command:");
@@ -38,23 +32,23 @@ while(true){
                 if (userInput.equals("Training")) {
                     training.training();
                 }
-                if(userInput.equals("Director"))
-                {
+                if (userInput.equals("Director")) {
                     director.director();
                 }
-                if (userInput.equals("Registration")){
-                    registration.registration();
+                if (userInput.equals("Registration")) {
+                    Registration.registration();
                 }
-                if (userInput.equals("CourseDirector")){
-                    CourseDirector.courseDirector();
+                if (userInput.equals("CourseDirector")) {
+                    courseDirector.courseDirector();
                 }
                 if (userInput.equals("Search")) {
                     search.search();
                 }
-            }catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-    }}
-    //Main loop
+    }
+}
+//Main loop
 

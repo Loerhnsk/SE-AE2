@@ -24,6 +24,7 @@ public class Course implements Serializable {
     public String getCourseId() {
         return courseId;
     }
+
     public void setCourseId(String courseId) {
         this.courseId = courseId;
     }
@@ -35,6 +36,7 @@ public class Course implements Serializable {
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
+
     public List<String> getRequiredSkills() {
         return requiredSkills;
     }
@@ -59,7 +61,7 @@ public class Course implements Serializable {
     public void assignTeacher(Teacher teacher) {
         this.assignedTeachers.add(teacher);
     }
-    
+
     @Override
     public String toString() {
         return "Course{" +

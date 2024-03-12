@@ -16,7 +16,8 @@ public class TxtFileDataReader extends AbstractDataReader {
     private List<TeachingRequirement> teachingRequirements;
     private List<Teacher> teacher;
     private List<AssignedRequirement> assignedRequirements;
-    public TxtFileDataReader(){
+
+    public TxtFileDataReader() {
         readTeachingRequirementsFromFile(ConfigManager.getRequestFilePath());
         readTeachersFromFile(ConfigManager.getTeacherFilePath());
         readAssignedRequirementsFromFile(ConfigManager.getAssignedFilePath());
@@ -75,7 +76,7 @@ public class TxtFileDataReader extends AbstractDataReader {
             String line;
             while ((line = reader.readLine()) != null) {
                 //Name,Id,skill1/skill2/..,A,Assign,Training skill
-                String[] parts = line.split(",",-1);
+                String[] parts = line.split(",", -1);
                 if (parts.length >= 5) {
                     String Name = parts[0].trim();
                     int Id = Integer.parseInt(parts[1].trim()); // 确保这是一个整数
@@ -84,7 +85,7 @@ public class TxtFileDataReader extends AbstractDataReader {
                     boolean Approve = Boolean.parseBoolean(parts[3].trim());
                     String Train = parts[4].trim();
                     // Add Teacher to the list
-                    Teacher te = new Teacher(Name,Id,list,Approve,Train);
+                    Teacher te = new Teacher(Name, Id, list, Approve, Train);
                     teacher.add(te);
                 }
             }
@@ -126,6 +127,7 @@ public class TxtFileDataReader extends AbstractDataReader {
             e.printStackTrace();
         }
     }
+
     public List<TeachingRequirement> getTeachingRequirements() {
         return teachingRequirements;
     }
