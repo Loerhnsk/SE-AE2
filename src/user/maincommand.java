@@ -1,57 +1,66 @@
 package user;
 
+import Logic.*;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * The main command-line interface for interacting with different functionalities.
+ */
 public class maincommand {
     public static void main(String[] args) {
         // Initialize BufferedReader for user input
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        // Initialize instances of various classes
+        // Initialize instances of different functionalities
         Director director = new Director();
         Training training = new Training();
         CourseDirector courseDirector = new CourseDirector();
+        Registration registration = new Registration();
         Search search = new Search();
 
-        // Main command processing loop
+        // Main command loop
         while (true) {
             try {
-                // Prompt user for input
+                // Output current state and prompt for command
                 System.out.print("Command:");
                 String userInput = reader.readLine();
 
-                // Check user input for specific commands
+                // Check user input for various commands
                 if (userInput.equals("exit")) {
-                    // Exit the loop if the user inputs "exit"
+                    // Exit the program
                     break;
                 }
                 if (userInput.equals("Training")) {
-                    // Execute training functionality if the user inputs "Training"
+                    // Trigger training functionality
                     training.training();
                 }
                 if (userInput.equals("Director")) {
-                    // Execute director functionality if the user inputs "Director"
+                    // Trigger director functionality
                     director.director();
                 }
                 if (userInput.equals("Registration")) {
-                    // Execute registration functionality if the user inputs "Registration"
-                    Registration.registration();
+                    // Trigger registration functionality
+                    registration.registration();
                 }
                 if (userInput.equals("CourseDirector")) {
-                    // Execute course director functionality if the user inputs "CourseDirector"
+                    // Trigger course director functionality
                     courseDirector.courseDirector();
                 }
                 if (userInput.equals("Search")) {
-                    // Execute search functionality if the user inputs "Search"
+                    // Trigger search functionality
                     search.search();
+                } else {
+                    // Inform user about an incorrect command
+                    System.out.println("Wrong Command!");
                 }
             } catch (IOException e) {
-                // Print the stack trace in case of an IOException
+                // Handle IOException
                 e.printStackTrace();
             }
         }
     }
+    // Main loop
 }
-// Main loop for processing user commands
