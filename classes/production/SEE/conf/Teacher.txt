@@ -1,9 +1,9 @@
-Alice Johnson,1001,Java/Mathematics,false,
-Eva Davis,1003,English/Flying,false,
+Alice Johnson,1001,Java/Mathematics,true,Lover
+Eva Davis,1003,English/Flying,true,
 Grace Turner,1005,Java/Python,true,Lover
 Michael Anderson,1006,Mathematics/Physics/Chemistry,false,
-Olivia White,1007,chemistry,false,
-Samuel Clark,1008,Physics/English,true,
+Olivia White,1007,Flying,true,
+Samuel Clark,1008,Physics/English,false,
 a,1000,b/c/d,false,
 a,9,b,false,
 a,10,b/c,false,

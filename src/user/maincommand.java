@@ -12,12 +12,12 @@ public class maincommand {
     public static void main(String[] args) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         // 创建 Director 实例并注入数据读取实现类
-        DataReader dataReader = new TxtFileDataReader();
-        DataWriter dataWriter = new TxtFileDataWriter();
-        Database database = new Database(dataReader, dataWriter);
+//        DataReader dataReader = new TxtFileDataReader();
+//        DataWriter dataWriter = new TxtFileDataWriter();
+//        Database database = new Database(dataReader, dataWriter);//现在不用在这里创建了
 
         Director director = new Director();
-        Training training = new Training(database);
+        Training training = new Training();
 
         String teachingRequirementsPath = "src/conf/Teaching_Requirement.txt";
         String teacherPath = "src/conf/Teacher.txt";

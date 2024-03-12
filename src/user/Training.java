@@ -15,9 +15,7 @@ public class Training {
     private static Database database;
 
     // 构造函数接受 DataBase 实例
-    public Training(Database database) {
-        this.database = database;
-    }
+    public Training() {}
     private String name;
     private int id;
     private String skill;
@@ -111,6 +109,7 @@ public class Training {
     public void training() {
         //Read from file
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        database = new Database();
         //Main loop
         while (true) {
             try {

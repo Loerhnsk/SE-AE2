@@ -38,8 +38,9 @@ public class BasicCommands {
             e.printStackTrace();
         }
     }
+
     public static void writeTeacherToTxtFile(List<Teacher> teacher,
-                                                          String filePath) {
+                                             String filePath) {
         StringBuilder txtBuilder = new StringBuilder();
         for (Teacher t_e : teacher) {
             //Add the information to the textBuilder
@@ -48,11 +49,11 @@ public class BasicCommands {
                     t_e.getId()));
             List<String> skill = new ArrayList<>(t_e.getSkills());
             for (String s : skill) {
-                if(s != null)txtBuilder.append(s);
+                if (s != null) txtBuilder.append(s);
                 txtBuilder.append("/");
             }
             txtBuilder.deleteCharAt(txtBuilder.length() - 1);
-            if(t_e.checkAssign())txtBuilder.append(",true,");
+            if (t_e.checkAssign()) txtBuilder.append(",true,");
             else txtBuilder.append(",false,");
             txtBuilder.append(t_e.getTrain()).append("\n");
         }
@@ -104,7 +105,7 @@ public class BasicCommands {
             String line;
             while ((line = reader.readLine()) != null) {
                 //Name,Id,skill1/skill2/..,A,Assign,Training skill
-                String[] parts = line.split(",",-1);
+                String[] parts = line.split(",", -1);
                 if (parts.length >= 5) {
                     String Name = parts[0].trim();
                     int Id = Integer.parseInt(parts[1].trim()); // 确保这是一个整数
@@ -113,7 +114,7 @@ public class BasicCommands {
                     boolean Approve = Boolean.parseBoolean(parts[3].trim());
                     String Train = parts[4].trim();
                     // Add Teacher to the list
-                    Teacher te = new Teacher(Name,Id,list,Approve,Train);
+                    Teacher te = new Teacher(Name, Id, list, Approve, Train);
                     teacher.add(te);
                 }
             }
@@ -124,6 +125,7 @@ public class BasicCommands {
         }
         return teacher;
     }
+
     public static List<AssignedRequirement> readAssignedRequirementsFromTxtFile(String filePath) {
         List<AssignedRequirement> assignedRequirements = new ArrayList<>();
 
@@ -158,117 +160,19 @@ public class BasicCommands {
     }
 
     //write a line
-    public static void writeline(){
+    public static void writeline() {
 
         String output = "";
-        for(int i=0; i<200 ;i++) output +="-";
+        for (int i = 0; i < 200; i++) output += "-";
         System.out.println(output);
     }
-    //用于输出teacher
-    public static void outputTeacher(List<Teacher> list){
-        for (Teacher teacher : list) {
-            if(!teacher.checkAssign())
-                System.out.println(teacher);
-        }
-    }
-    //output all of the pending requirement
-    public static void outputrequirement(List<TeachingRequirement> list){
-        for (TeachingRequirement tr : list) {
-            if(tr.checkPending())System.out.println(tr);
-        }
-    }
 
-    public static void outputallrequirement(List<TeachingRequirement> list){
+    public static void outputallrequirement(List<TeachingRequirement> list) {
         for (TeachingRequirement tr : list) {
             System.out.println(tr);
         }
     }
-//    Use teacher ID and approval ID to make approval request
-    public static void Approvalrequest(List<TeachingRequirement> request, List<Teacher> teacher, List<AssignedRequirement> assignedRequirements,
-                                       int requestID, int teacherID){
-        System.out.println("Checking requestID: " + requestID + ", teacherID: " + teacherID);
-        TeachingRequirement requirement = null;
-        boolean isChanged = false;
-        for(TeachingRequirement tr:request){
-            if(tr.getRequestId() == requestID){
-                if(!tr.checkPending()){
-                    System.out.println("Not Pending");
-                    return;
-                }else {
-                    requirement = tr;
-                }
-            }
-        }
-
-        if (requirement==null) {
-            System.out.println("Request Not Found");
-            return;
-        }
-        for (Teacher te : teacher) {
-            if (te.getId() == teacherID) {
-                if (te.checkAssign()) {
-                    System.out.println("Already Assigned");
-                    return;
-                } else if (!te.checkSkill(requirement.getRequirement())) {
-                    System.out.println("The corresponding teacher does not have this skill");
-                    return;
-                } else {
-                    te.setAssign();
-                    System.out.println(te.checkAssign());
-                    AssignedRequirement assignedRequirement = new AssignedRequirement(); // Create a new instance
-                    assignedRequirement.setClassName(requirement.getRequirement());
-                    assignedRequirement.setRequestId(requirement.getRequestId());
-                    assignedRequirement.setTId(te.getId());
-                    assignedRequirement.setTName(te.getName());
-
-
-                    assignedRequirements.add(assignedRequirement);
-                    requirement.setRequestStatus("approved");
-                    System.out.println(requirement.checkPending());
-                    isChanged = true;
-                }
-            }
-        }
-        if(!isChanged){
-            System.out.println("Teacher Not Found");
-            return;
-        }
-        System.out.println("Assigned");
-        System.out.println("Assigned Requirements After Approval: " + assignedRequirements);
-    }
-    public static void Rejecting(List<TeachingRequirement> list, int ID) {
-        boolean isPending = false;
-        boolean isChange = false;
-        // 读取文件内容
-        for (TeachingRequirement te : list) {
-            if (te.getRequestId() == ID) {
-                if (te.checkPending()) {
-                    te.setRequestStatus("rejected");
-                    isChange = true;
-                } else isPending = true;
-            }
-        }
-    }
-    public static void writeAssignedRequirementsToTxtFile(List<AssignedRequirement> assignedRequirements,
-                                                          String filePath) {
-        StringBuilder txtBuilder = new StringBuilder();
-        for (AssignedRequirement requirement : assignedRequirements) {
-            // Corrected order of placeholders
-            txtBuilder.append(String.format("%s,%d,%s,%d,%s\n",
-                    requirement.getDirectorName(),
-                    requirement.getRequestId(),
-                    requirement.getClassName(),
-                    requirement.getTId(),
-                    requirement.getTName()));
-        }
-
-        // 写入文件
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) {
-            writer.write(txtBuilder.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
 }
+
+
+

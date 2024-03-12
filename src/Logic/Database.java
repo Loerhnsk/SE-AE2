@@ -11,8 +11,14 @@ public class Database {
     private DataWriter dataWriter;
     private DataReader dataReader;
     public Database(DataReader reader, DataWriter dataWriter) {
-        this.dataReader = reader;
-        this.dataWriter = dataWriter;
+        this.dataReader = new TxtFileDataReader();
+        this.dataWriter = new TxtFileDataWriter();
+        // Initialize data lists
+
+    }
+    public Database() {
+        this.dataReader = new TxtFileDataReader();
+        this.dataWriter = new TxtFileDataWriter();
         // Initialize data lists
 
     }
