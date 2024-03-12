@@ -19,6 +19,7 @@ public class maincommand {
         Director director = new Director();
         Training training = new Training();
         CourseDirector courseDirector = new CourseDirector();
+        Registration registration = new Registration();
         Search search = new Search();
 
         while (true) {
@@ -36,7 +37,7 @@ public class maincommand {
                     director.director();
                 }
                 if (userInput.equals("Registration")) {
-                    Registration.registration();
+                    registration.registration();
                 }
                 if (userInput.equals("CourseDirector")) {
                     courseDirector.courseDirector();
