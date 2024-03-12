@@ -2,6 +2,7 @@ package user;
 
 import Entity.Teacher;
 import Logic.BasicCommands;
+import Logic.Database;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,33 +12,37 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Registration {
-    private static String teacherfile ="src\\conf\\Teacher.txt";  //The file name of the teacher
-    private static List<Teacher> teacher = BasicCommands.readTeacherFromTxtFile(teacherfile);
+    private  Database database;
+    public Registration(Database database) {
+        this.database = database;
+    }
+   // private static String teacherfile ="src\\conf\\Teacher.txt";  //The file name of the teacher
+  //  private static List<Teacher> teacher = BasicCommands.readTeacherFromTxtFile(teacherfile);
 
-    private static void showTeacher(){
-        for(Teacher t:teacher){
+    private  void showTeacher(){
+        for(Teacher t:database.getDataReader().getTeachers()){
             System.out.println(t);
         }
     }
-    private static String del(String num){
+    private String del(String num){
         if(!num.matches("\\d+")) return "Wrong command";
         int id = Integer.parseInt(num);
-        for(int i = 0; i < teacher.size(); ++i){
-            if(teacher.get(i).getId() == id){
-                if(teacher.get(i).checkAssign()) return "Assigned teacher. Wrong command";
-                teacher.remove(i);
+        for(int i = 0; i < database.getDataReader().getTeachers().size(); ++i){
+            if(database.getDataReader().getTeachers().get(i).getId() == id){
+                if(database.getDataReader().getTeachers().get(i).checkAssign()) return "Assigned teacher. Wrong command";
+                database.getDataReader().getTeachers().remove(i);
                 return "Deleted";
             }
         }
         return "No such Teacher";
     }
-    private static boolean checkteacherID(int x){
-        for(Teacher t:teacher){
+    private boolean checkteacherID(int x){
+        for(Teacher t:database.getDataReader().getTeachers()){
             if(t.getId() == x)return false;
         }
         return true;
     }
-    private static String register(String[] parts){
+    private String register(String[] parts){
 
         if(parts.length != 4||!parts[0].equals("Add")) return "Wrong command";
         if(!parts[1].matches("\\d+")) return "Wrong command";
@@ -47,10 +52,10 @@ public class Registration {
         String[] skill = parts[3].split("/");
         List<String> skills = new ArrayList<>(Arrays.asList(skill));
         Teacher nTeacher = new Teacher(name,id,skills,false,"");
-        teacher.add(nTeacher);
+        database.getDataReader().getTeachers().add(nTeacher);
         return "Register Succeed";
     }
-    public static void registration() {
+    public void registration() {
         //Read from file
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         //Main loop
@@ -66,7 +71,7 @@ public class Registration {
                 //Exit command
                 if (userInput.equals("exit")) {
                     //write current data to the file
-                    BasicCommands.writeTeacherToTxtFile(teacher,teacherfile);
+                    database.getDataWriter().writeTeachers(database.getDataReader().getTeachers(), database.getDataReader().getTeacherFilePath());
                     break;
                 }
                 if (userInput.equals("SHOW")) {

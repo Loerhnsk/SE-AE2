@@ -1,6 +1,6 @@
 Singing,Billie Jean,1,Lover,semester 1,approved
 BasketBall,Kobe,2,Flying,Semester 2,approved
 Football,Yoshi,3,English,Semester1,approved
-cN,director,4,skill,time,pending
+cN,director,4,skill,time,approved
 abs,aac,5,aaa,a,pending
 PC,me,5,play,today,pending

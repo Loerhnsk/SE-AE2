@@ -18,17 +18,7 @@ public class Training {
     public Training(Database database) {
         this.database = database;
     }
-    private String name;
-    private int id;
-    private String skill;
-    //private static List<TeachingRequirement> teachingRequirements = BasicCommands.readTeachingRequirementsFromTxtFile(requestfile);
-    //private static List<Teacher> teacher = BasicCommands.readTeacherFromTxtFile(teacherfile);
-    //output all of available teacher
 
-  //  public Training(String requestfile, String teacherfile){
-   //     teachingRequirements = BasicCommands.readTeachingRequirementsFromTxtFile(requestfile);
-   //     teacher = BasicCommands.readTeacherFromTxtFile(teacherfile);
-   // }
     private void outputTeacher(List<Teacher> list){
         for (Teacher te : list) {
             if(!te.checkAssign())System.out.println(te);

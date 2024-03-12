@@ -1,10 +1,7 @@
 package user;
 
 
-import Logic.DataReader;
-import Logic.DataWriter;
-import Logic.TxtFileDataReader;
-import Logic.TxtFileDataWriter;
+import Logic.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,14 +17,8 @@ public class maincommand {
 
         Director director = new Director(database);
         Training training = new Training(database);
+        Registration registration = new Registration(database);
 
-        String teachingRequirementsPath = "src/conf/Teaching_Requirement.txt";
-        String teacherPath = "src/conf/Teacher.txt";
-
-//        DirectorQueries directorQueries = new DirectorQueries(teachingRequirementsPath);
-//        TeacherQueries teacherQueries = new TeacherQueries(teacherPath);
-        Director director = new Director(dataReader,dataWriter);
-        Training training = new Training(dataReader);
         Search search = new Search();
 
 while(true){
@@ -46,7 +37,7 @@ while(true){
                     director.director();
                 }
                 if (userInput.equals("Registration")){
-                    Registration.registration();
+                    registration.registration();
                 }
                 if (userInput.equals("CourseDirector")){
                     CourseDirector.courseDirector();
