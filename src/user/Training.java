@@ -15,10 +15,18 @@ public class Training {
     private static Database database;
 
     // 构造函数接受 DataBase 实例
-    public Training(Database database) {
-        this.database = database;
-    }
+    public Training() {}
+    private String name;
+    private int id;
+    private String skill;
+    //private static List<TeachingRequirement> teachingRequirements = BasicCommands.readTeachingRequirementsFromTxtFile(requestfile);
+    //private static List<Teacher> teacher = BasicCommands.readTeacherFromTxtFile(teacherfile);
+    //output all of available teacher
 
+  //  public Training(String requestfile, String teacherfile){
+   //     teachingRequirements = BasicCommands.readTeachingRequirementsFromTxtFile(requestfile);
+   //     teacher = BasicCommands.readTeacherFromTxtFile(teacherfile);
+   // }
     private void outputTeacher(List<Teacher> list){
         for (Teacher te : list) {
             if(!te.checkAssign())System.out.println(te);
@@ -101,6 +109,7 @@ public class Training {
     public void training() {
         //Read from file
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        database = new Database();
         //Main loop
         while (true) {
             try {
