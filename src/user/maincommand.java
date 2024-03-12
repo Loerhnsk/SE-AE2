@@ -18,12 +18,7 @@ public class maincommand {
 
         Director director = new Director();
         Training training = new Training();
-
-        String teachingRequirementsPath = "src/conf/Teaching_Requirement.txt";
-        String teacherPath = "src/conf/Teacher.txt";
-
-//        DirectorQueries directorQueries = new DirectorQueries(teachingRequirementsPath);
-//        TeacherQueries teacherQueries = new TeacherQueries(teacherPath);
+        CourseDirector courseDirector = new CourseDirector();
         Search search = new Search();
 
 while(true){
@@ -45,7 +40,7 @@ while(true){
                     Registration.registration();
                 }
                 if (userInput.equals("CourseDirector")){
-                    CourseDirector.courseDirector();
+                    courseDirector.courseDirector();
                 }
                 if (userInput.equals("Search")) {
                     search.search();
