@@ -13,8 +13,8 @@ import java.util.List;
 
 public class Registration {
     private  Database database;
-    public Registration(Database database) {
-        this.database = database;
+    public Registration() {
+
     }
    // private static String teacherfile ="src\\conf\\Teacher.txt";  //The file name of the teacher
   //  private static List<Teacher> teacher = BasicCommands.readTeacherFromTxtFile(teacherfile);
@@ -56,6 +56,7 @@ public class Registration {
         return "Register Succeed";
     }
     public void registration() {
+        database = new Database();
         //Read from file
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         //Main loop

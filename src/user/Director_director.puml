@@ -1,83 +1,191 @@
 @startuml
-participant Actor
-Actor -> Director : director
-activate Director
-Director -> BasicCommands : outputrequirement
-activate BasicCommands
-BasicCommands -> TeachingRequirement : checkPending
-activate TeachingRequirement
-TeachingRequirement --> BasicCommands
-deactivate TeachingRequirement
-BasicCommands --> Director
-deactivate BasicCommands
-Director -> BasicCommands : writeline
-activate BasicCommands
-BasicCommands --> Director
-deactivate BasicCommands
-Director -> BasicCommands : outputTeacher
-activate BasicCommands
-BasicCommands -> Teacher : checkAssign
-activate Teacher
-Teacher --> BasicCommands
-deactivate Teacher
-BasicCommands --> Director
-deactivate BasicCommands
-Director -> BasicCommands : writeline
-activate BasicCommands
-BasicCommands --> Director
-deactivate BasicCommands
-Director -> BasicCommands : writeTeachingRequirementsToTxtFile
-activate BasicCommands
-BasicCommands --> Director
-deactivate BasicCommands
-Director -> BasicCommands : writeTeacherToTxtFile
-activate BasicCommands
-BasicCommands -> Teacher : checkAssign
-activate Teacher
-Teacher --> BasicCommands
-deactivate Teacher
-BasicCommands --> Director
-deactivate BasicCommands
-Director -> BasicCommands : writeAssignedRequirementsToTxtFile
-activate BasicCommands
-BasicCommands --> Director
-deactivate BasicCommands
-Director -> BasicCommands : Rejecting
-activate BasicCommands
-BasicCommands -> TeachingRequirement : checkPending
-activate TeachingRequirement
-TeachingRequirement --> BasicCommands
-deactivate TeachingRequirement
-BasicCommands --> Director
-deactivate BasicCommands
-Director -> BasicCommands : Approvalrequest
-activate BasicCommands
-BasicCommands -> TeachingRequirement : checkPending
-activate TeachingRequirement
-TeachingRequirement --> BasicCommands
-deactivate TeachingRequirement
-BasicCommands -> Teacher : checkAssign
-activate Teacher
-Teacher --> BasicCommands
-deactivate Teacher
-BasicCommands -> Teacher : checkSkill
-activate Teacher
-Teacher --> BasicCommands
-deactivate Teacher
-BasicCommands -> Teacher : setAssign
-activate Teacher
-Teacher --> BasicCommands
-deactivate Teacher
-create AssignedRequirement
-BasicCommands -> AssignedRequirement : new
-activate AssignedRequirement
-AssignedRequirement --> BasicCommands
-deactivate AssignedRequirement
-BasicCommands --> Director
-deactivate BasicCommands
-Director -> BasicCommands : writeline
-activate BasicCommands
-BasicCommands --> Director
-deactivate BasicCommands
-return
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class AbstractDataReader {
+  + AbstractDataReader():
+  # readTeachingRequirementsFromFile(String): void
+  # readTeachersFromFile(String): void
+  # readAssignedRequirementsFromFile(String): void
+}
+class Approval {
+  + Approval(int, String, LocalDateTime, String):
+  - ID: int
+  - approver: String
+  - approvalTime: LocalDateTime
+  - comments: String
+  + toString(): String
+  + isApproved(): int
+   approvalTime: LocalDateTime
+   rID: int
+   comments: String
+   approved: int
+   approver: String
+   ID: int
+}
+class AssignedRequirement {
+  + AssignedRequirement():
+  - TId: int
+  - directorName: String
+  - className: String
+  - requestId: int
+  + toString(): String
+   TName: String
+   directorName: String
+   className: String
+   TId: int
+   requestId: int
+}
+class BasicCommands {
+  + BasicCommands():
+  + writeAssignedRequirementsToTxtFile(List<AssignedRequirement>, String): void
+  + readAssignedRequirementsFromTxtFile(String): List<AssignedRequirement>
+  + Rejecting(List<TeachingRequirement>, int): void
+  + outputTeacher(List<Teacher>): void
+  + writeline(): void
+  + Approvalrequest(List<TeachingRequirement>, List<Teacher>, List<AssignedRequirement>, int, int): void
+  + outputallrequirement(List<TeachingRequirement>): void
+  + readTeacherFromTxtFile(String): List<Teacher>
+  + readTeachingRequirementsFromTxtFile(String): List<TeachingRequirement>
+  + writeTeacherToTxtFile(List<Teacher>, String): void
+  + writeTeachingRequirementsToTxtFile(List<TeachingRequirement>, String): void
+  + outputrequirement(List<TeachingRequirement>): void
+}
+class ConfigManager {
+  + ConfigManager():
+   assignedFilePath: String
+   teacherFilePath: String
+   requestFilePath: String
+}
+class Course {
+  + Course(String, String):
+  - courseId: String
+  - courseName: String
+  - requiredSkills: List<String>
+  - assignedTeachers: List<Teacher>
+  + toString(): String
+  + assignTeacher(Teacher): void
+  + addRequiredSkill(String): void
+   requiredSkills: List<String>
+   courseId: String
+   courseName: String
+   assignedTeachers: List<Teacher>
+}
+interface DataReader << interface >> {
+   teacherFilePath: String
+   requestFilePath: String
+   teachingRequirements: List<TeachingRequirement>
+   assignedFilePath: String
+   teachers: List<Teacher>
+   assignedRequirements: List<AssignedRequirement>
+}
+interface DataWriter << interface >> {
+  + writeTeachingRequirements(List<TeachingRequirement>, String): void
+  + writeTeachers(List<Teacher>, String): void
+  + writeAssignedRequirements(List<AssignedRequirement>, String): void
+}
+class Database {
+  + Database(DataReader, DataWriter):
+  - dataWriter: DataWriter
+  - dataReader: DataReader
+   dataWriter: DataWriter
+   dataReader: DataReader
+}
+class Director {
+  + Director():
+  + director(): void
+}
+class Teacher {
+  + Teacher(String, int, List<String>, boolean, String):
+  - skills: List<String>
+  - train: String
+  - id: int
+  - name: String
+  + addSkill(String): void
+  + checkAssign(): boolean
+  + setAssign(): void
+  + toString(): String
+  + checkSkill(String): boolean
+   name: String
+   train: String
+   skills: List<String>
+   id: int
+}
+class TeachingRequirement {
+  + TeachingRequirement(String, String, String, String):
+  + TeachingRequirement(String, String, int, String, String, String):
+  - teachingTime: String
+  - className: String
+  - requirement: String
+  - requestId: int
+  - requestStatus: String
+  - directorName: String
+  + toString(): String
+  + checkPending(): boolean
+   directorName: String
+   className: String
+   requirement: String
+   requestStatus: String
+   requestId: int
+   teachingTime: String
+}
+class TxtFileDataReader {
+  + TxtFileDataReader():
+  - teachingRequirements: List<TeachingRequirement>
+  - teacher: List<Teacher>
+  - assignedRequirements: List<AssignedRequirement>
+  # readTeachersFromFile(String): void
+  # readTeachingRequirementsFromFile(String): void
+  # readAssignedRequirementsFromFile(String): void
+   requestFilePath: String
+   teachingRequirements: List<TeachingRequirement>
+   teacher: List<Teacher>
+   assignedRequirements: List<AssignedRequirement>
+   teacherFilePath: String
+   assignedFilePath: String
+   teachers: List<Teacher>
+}
+class TxtFileDataWriter {
+  + TxtFileDataWriter():
+  + writeTeachers(List<Teacher>, String): void
+  + writeAssignedRequirements(List<AssignedRequirement>, String): void
+  + writeTeachingRequirements(List<TeachingRequirement>, String): void
+}
+
+AbstractDataReader   -[#008200,dashed]-^  DataReader
+BasicCommands        -[#595959,dashed]->  AssignedRequirement : "«create»"
+BasicCommands        -[#595959,dashed]->  Teacher             : "«create»"
+BasicCommands        -[#595959,dashed]->  TeachingRequirement : "«create»"
+ConfigManager        -[#595959,dashed]->  ConfigManager
+Course              "1" *-[#595959,plain]-> "assignedTeachers\n*" Teacher
+DataReader           -[#595959,dashed]->  AssignedRequirement
+DataReader           -[#595959,dashed]->  Teacher
+DataReader           -[#595959,dashed]->  TeachingRequirement
+DataWriter           -[#595959,dashed]->  AssignedRequirement
+DataWriter           -[#595959,dashed]->  Teacher
+DataWriter           -[#595959,dashed]->  TeachingRequirement
+Database            "1" *-[#595959,plain]-> "dataReader\n1" DataReader
+Database            "1" *-[#595959,plain]-> "dataWriter\n1" DataWriter
+Director             -[#595959,dashed]->  BasicCommands
+Director             -[#595959,dashed]->  DataReader
+Director             -[#595959,dashed]->  DataWriter
+Director             -[#595959,dashed]->  Database            : "«create»"
+Director            "1" *-[#595959,plain]-> "database\n1" Database
+Director             -[#595959,dashed]->  TxtFileDataReader   : "«create»"
+Director             -[#595959,dashed]->  TxtFileDataWriter   : "«create»"
+TxtFileDataReader    -[#000082,plain]-^  AbstractDataReader
+TxtFileDataReader   "1" *-[#595959,plain]-> "assignedRequirements\n*" AssignedRequirement
+TxtFileDataReader    -[#595959,dashed]->  AssignedRequirement : "«create»"
+TxtFileDataReader    -[#595959,dashed]->  ConfigManager
+TxtFileDataReader   "1" *-[#595959,plain]-> "teacher\n*" Teacher
+TxtFileDataReader    -[#595959,dashed]->  Teacher             : "«create»"
+TxtFileDataReader   "1" *-[#595959,plain]-> "teachingRequirements\n*" TeachingRequirement
+TxtFileDataReader    -[#595959,dashed]->  TeachingRequirement : "«create»"
+TxtFileDataReader    -[#595959,dashed]->  TxtFileDataReader
+TxtFileDataWriter    -[#595959,dashed]->  AssignedRequirement
+TxtFileDataWriter    -[#008200,dashed]-^  DataWriter
+TxtFileDataWriter    -[#595959,dashed]->  Teacher
+TxtFileDataWriter    -[#595959,dashed]->  TeachingRequirement
 @enduml
