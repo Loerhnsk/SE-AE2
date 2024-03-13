@@ -52,9 +52,6 @@ public class maincommand {
                 if (userInput.equals("Search")) {
                     // Trigger search functionality
                     search.search();
-                } else {
-                    // Inform user about an incorrect command
-                    System.out.println("Wrong Command!");
                 }
             } catch (IOException e) {
                 // Handle IOException
