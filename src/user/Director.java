@@ -13,16 +13,19 @@ import java.util.List;
 public class Director {
     private Database database;
 
-    // 构造函数接受 DataReader 实例
+    // Constructor for Director class
     public Director() {
-
+        // Constructor body
     }
 
+    // Method for approving teaching requests and assigning teachers
     private void Approvalrequest(List<TeachingRequirement> request, List<Teacher> teacher, List<AssignedRequirement> assignedRequirements,
                                  int requestID, int teacherID) {
         System.out.println("Checking requestID: " + requestID + ", teacherID: " + teacherID);
         TeachingRequirement requirement = null;
         boolean isChanged = false;
+
+        // Iterate through teaching requirements to find the specified requestID
         for (TeachingRequirement tr : request) {
             if (tr.getRequestId() == requestID) {
                 if (!tr.checkPending()) {
@@ -34,10 +37,13 @@ public class Director {
             }
         }
 
+        // Check if the requirement was found
         if (requirement == null) {
             System.out.println("Request Not Found");
             return;
         }
+
+        // Iterate through teachers to find the specified teacherID
         for (Teacher te : teacher) {
             if (te.getId() == teacherID) {
                 if (te.checkAssign()) {
@@ -49,13 +55,15 @@ public class Director {
                 } else {
                     te.setAssign();
                     System.out.println(te.checkAssign());
-                    AssignedRequirement assignedRequirement = new AssignedRequirement(); // Create a new instance
+
+                    // Create a new instance of AssignedRequirement
+                    AssignedRequirement assignedRequirement = new AssignedRequirement();
                     assignedRequirement.setClassName(requirement.getRequirement());
                     assignedRequirement.setRequestId(requirement.getRequestId());
                     assignedRequirement.setTId(te.getId());
                     assignedRequirement.setTName(te.getName());
 
-
+                    // Add the assigned requirement to the list
                     assignedRequirements.add(assignedRequirement);
                     requirement.setRequestStatus("approved");
                     System.out.println(requirement.checkPending());
@@ -63,18 +71,23 @@ public class Director {
                 }
             }
         }
+
+        // Check if any changes were made
         if (!isChanged) {
             System.out.println("Teacher Not Found");
             return;
         }
+
         System.out.println("Assigned");
         System.out.println("Assigned Requirements After Approval: " + assignedRequirements);
     }
 
+    // Method for rejecting a teaching request
     public static void Rejecting(List<TeachingRequirement> list, int ID) {
         boolean isPending = false;
         boolean isChange = false;
-        // 读取文件内容
+
+        // Iterate through teaching requirements to find the specified ID
         for (TeachingRequirement te : list) {
             if (te.getRequestId() == ID) {
                 if (te.checkPending()) {
@@ -85,7 +98,7 @@ public class Director {
         }
     }
 
-    //用于输出teacher
+    // Method for outputting teachers who are not assigned
     private void outputTeacher(List<Teacher> list) {
         for (Teacher teacher : list) {
             if (!teacher.checkAssign())
@@ -93,17 +106,19 @@ public class Director {
         }
     }
 
-    //output all of the pending requirement
+    // Method for outputting all pending teaching requirements
     private void outputrequirement(List<TeachingRequirement> list) {
         for (TeachingRequirement tr : list) {
             if (tr.checkPending()) System.out.println(tr);
         }
     }
 
+    // Main method for Director functionality
     public void director() {
-        // Read from file
+        // Initialize BufferedReader for user input
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         database = new Database();
+
         // Output current state
         while (true) {
             try {
@@ -117,9 +132,10 @@ public class Director {
 
                 // Read User Input from terminal
                 String userInput = reader.readLine();
+
+                // Exit the loop if the user inputs "exit"
                 if (userInput.equals("exit")) {
                     // Write current data to the file
-
                     database.getDataWriter().writeTeachingRequirements(database.getDataReader().getTeachingRequirements(), database.getDataReader().getRequestFilePath());
                     database.getDataWriter().writeTeachers(database.getDataReader().getTeachers(), database.getDataReader().getTeacherFilePath());
                     database.getDataWriter().writeAssignedRequirements(database.getDataReader().getAssignedRequirements(), database.getDataReader().getAssignedFilePath());

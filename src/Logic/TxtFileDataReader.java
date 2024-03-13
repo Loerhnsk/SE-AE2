@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-// 具体的实现类
+// Concrete implementation class
 public class TxtFileDataReader extends AbstractDataReader {
     private List<TeachingRequirement> teachingRequirements;
     private List<Teacher> teacher;
@@ -22,7 +22,6 @@ public class TxtFileDataReader extends AbstractDataReader {
         readTeachersFromFile(ConfigManager.getTeacherFilePath());
         readAssignedRequirementsFromFile(ConfigManager.getAssignedFilePath());
     }
-
 
     @Override
     public String getRequestFilePath() {
@@ -45,17 +44,16 @@ public class TxtFileDataReader extends AbstractDataReader {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                // 假设每行格式为: directorName,requestId,requirement,teachingTime,requestStatus
+                // Assume each line format: directorName,requestId,requirement,teachingTime,requestStatus
                 String[] parts = line.split(",");
                 if (parts.length >= 6) {
                     String className = parts[0].trim();
                     String directorName = parts[1].trim();
-                    int requestId = Integer.parseInt(parts[2].trim()); // 确保这是一个整数
+                    int requestId = Integer.parseInt(parts[2].trim());
                     String requirement = parts[3].trim();
                     String teachingTime = parts[4].trim();
                     String requestStatus = parts[5].trim();
 
-                    // 创建TeachingRequirement对象并添加到列表中
                     TeachingRequirement tr = new TeachingRequirement(className, directorName, requestId, requirement,
                             teachingTime, requestStatus);
                     teachingRequirements.add(tr);
@@ -70,21 +68,21 @@ public class TxtFileDataReader extends AbstractDataReader {
 
     @Override
     protected void readTeachersFromFile(String filePath) {
-        this.teacher = new ArrayList<>(); // 使用类的成员变量
+        this.teacher = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                //Name,Id,skill1/skill2/..,A,Assign,Training skill
+                // Name,Id,skill1/skill2/..,A,Assign,Training skill
                 String[] parts = line.split(",", -1);
                 if (parts.length >= 5) {
                     String Name = parts[0].trim();
-                    int Id = Integer.parseInt(parts[1].trim()); // 确保这是一个整数
+                    int Id = Integer.parseInt(parts[1].trim());
                     String[] skills = parts[2].split("/");
                     List<String> list = new ArrayList<>(Arrays.asList(skills));
                     boolean Approve = Boolean.parseBoolean(parts[3].trim());
                     String Train = parts[4].trim();
-                    // Add Teacher to the list
+
                     Teacher te = new Teacher(Name, Id, list, Approve, Train);
                     teacher.add(te);
                 }
@@ -98,12 +96,12 @@ public class TxtFileDataReader extends AbstractDataReader {
 
     @Override
     protected void readAssignedRequirementsFromFile(String filePath) {
-        this.assignedRequirements = new ArrayList<>(); // 使用类的成员变量
+        this.assignedRequirements = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                // 假设每行格式为: directorName,requestId,className,TId,name
+                // Assume each line format: directorName,requestId,className,TId,name
                 String[] parts = line.split(",");
                 if (parts.length == 5) {
                     String directorName = parts[0].trim();
@@ -112,7 +110,6 @@ public class TxtFileDataReader extends AbstractDataReader {
                     int TId = Integer.parseInt(parts[3].trim());
                     String name = parts[4].trim();
 
-                    // 创建AssignedRequirement对象并添加到列表中
                     AssignedRequirement requirement = new AssignedRequirement();
                     requirement.setDirectorName(directorName);
                     requirement.setRequestId(requestId);
@@ -151,5 +148,4 @@ public class TxtFileDataReader extends AbstractDataReader {
     public void setAssignedRequirements(List<AssignedRequirement> assignedRequirements) {
         this.assignedRequirements = assignedRequirements;
     }
-
 }

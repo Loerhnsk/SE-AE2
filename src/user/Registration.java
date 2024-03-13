@@ -16,9 +16,6 @@ public class Registration {
     public Registration() {
 
     }
-   // private static String teacherfile ="src\\conf\\Teacher.txt";  //The file name of the teacher
-  //  private static List<Teacher> teacher = BasicCommands.readTeacherFromTxtFile(teacherfile);
-
     private  void showTeacher(){
         for(Teacher t:database.getDataReader().getTeachers()){
             System.out.println(t);
@@ -64,9 +61,11 @@ public class Registration {
             try {
                 //Output current state
 
-                System.out.println("Input teacher ID, name, skills(separate with / or Enter exit to exit)");
-
-
+                System.out.println("Enter Add,teacher ID, name, skills(separate with /)");
+                System.out.println("Enter Del,teacher ID to delete");
+                System.out.println("Enter SHOW to show all of the teacher");
+                System.out.println("Enter exit to exit");
+                System.out.print("Command:");
                 //Read User Input from terminal
                 String userInput = reader.readLine();
                 //Exit command

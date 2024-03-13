@@ -12,7 +12,7 @@ import java.util.List;
 public class TxtFileDataWriter implements DataWriter {
     @Override
     public void writeTeachingRequirements(List<TeachingRequirement> teachingRequirements, String filePath) {
-        // 实现写入教学需求的逻辑
+        // Implement the logic to write teaching requirements
         StringBuilder txtBuilder = new StringBuilder();
         for (TeachingRequirement requirement : teachingRequirements) {
             txtBuilder.append(String.format("%s,%s,%d,%s,%s,%s\n",
@@ -24,7 +24,7 @@ public class TxtFileDataWriter implements DataWriter {
                     requirement.getRequestStatus()));
         }
 
-        // 写入文件
+        // Write to the file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) {
             writer.write(txtBuilder.toString());
         } catch (IOException e) {
@@ -34,7 +34,7 @@ public class TxtFileDataWriter implements DataWriter {
 
     @Override
     public void writeTeachers(List<Teacher> teachers, String filePath) {
-        // 实现写入教师信息的逻辑
+        // Implement the logic to write teacher information
         StringBuilder txtBuilder = new StringBuilder();
         for (Teacher teacher : teachers) {
             txtBuilder.append(String.format("%s,%d,",
@@ -51,7 +51,7 @@ public class TxtFileDataWriter implements DataWriter {
             txtBuilder.append(teacher.getTrain()).append("\n");
         }
 
-        // 写入文件
+        // Write to the file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) {
             writer.write(txtBuilder.toString());
         } catch (IOException e) {
@@ -61,7 +61,7 @@ public class TxtFileDataWriter implements DataWriter {
 
     @Override
     public void writeAssignedRequirements(List<AssignedRequirement> assignedRequirements, String filePath) {
-        // 实现写入已分配需求的逻辑
+        // Implement the logic to write assigned requirements
         StringBuilder txtBuilder = new StringBuilder();
         for (AssignedRequirement requirement : assignedRequirements) {
             txtBuilder.append(String.format("%s,%d,%s,%d,%s\n",
@@ -72,7 +72,7 @@ public class TxtFileDataWriter implements DataWriter {
                     requirement.getTName()));
         }
 
-        // 写入文件
+        // Write to the file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) {
             writer.write(txtBuilder.toString());
         } catch (IOException e) {

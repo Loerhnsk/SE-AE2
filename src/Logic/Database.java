@@ -11,20 +11,20 @@ public class Database {
     private DataWriter dataWriter;
     private DataReader dataReader;
 
+    // Constructors
     public Database(DataReader reader, DataWriter dataWriter) {
-        this.dataReader = new TxtFileDataReader();
-        this.dataWriter = new TxtFileDataWriter();
-        // Initialize data lists
-
+        this.dataReader = reader;
+        this.dataWriter = dataWriter;
+        // Initialize data lists or perform other necessary setup
     }
 
     public Database() {
         this.dataReader = new TxtFileDataReader();
         this.dataWriter = new TxtFileDataWriter();
-        // Initialize data lists
-
+        // Initialize data lists or perform other necessary setup
     }
 
+    // Getters and Setters
     public DataWriter getDataWriter() {
         return dataWriter;
     }
