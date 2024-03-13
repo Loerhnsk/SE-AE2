@@ -9,24 +9,12 @@ import Entity.TeachingRequirement;
 import Logic.*;
 
 public class Training {
-//    private static String requestfile ="src\\conf\\Teaching_Requirement.txt"; //The fine name of requirement
-//    private static String teacherfile ="src\\conf\\Teacher.txt";  //The file name of the teacher
 
     private static Database database;
 
     // 构造函数接受 DataBase 实例
     public Training() {}
-    private String name;
-    private int id;
-    private String skill;
-    //private static List<TeachingRequirement> teachingRequirements = BasicCommands.readTeachingRequirementsFromTxtFile(requestfile);
-    //private static List<Teacher> teacher = BasicCommands.readTeacherFromTxtFile(teacherfile);
-    //output all of available teacher
 
-  //  public Training(String requestfile, String teacherfile){
-   //     teachingRequirements = BasicCommands.readTeachingRequirementsFromTxtFile(requestfile);
-   //     teacher = BasicCommands.readTeacherFromTxtFile(teacherfile);
-   // }
     private void outputTeacher(List<Teacher> list){
         for (Teacher te : list) {
             if(!te.checkAssign())System.out.println(te);
@@ -131,9 +119,8 @@ public class Training {
                     //write current data to the file
                     database.getDataWriter().writeTeachingRequirements(database.getDataReader().getTeachingRequirements(), database.getDataReader().getRequestFilePath());
                     database.getDataWriter().writeTeachers(database.getDataReader().getTeachers(), database.getDataReader().getTeacherFilePath());
-//                    BasicCommands.writeTeachingRequirementsToTxtFile(database.getDataReader().getTeachingRequirements(), requestfile);
-//                    BasicCommands.writeTeacherToTxtFile(database.getDataReader().getTeachers(),teacherfile);
-                    System.out.println("Exiting");
+
+
                     break;
                 }
                 //Input Order checking

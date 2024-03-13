@@ -3,4 +3,4 @@ Eva Davis,1003,English/Flying,true,Mathematics
 Grace Turner,1005,Java/Python,false,
 Michael Anderson,1006,Mathematics/Physics/Chemistry,false,
 Olivia White,1007,Flying,false,
-Samuel Clark,1008,Physics/English,false,
+jack,1009,Chinese/English,false,
